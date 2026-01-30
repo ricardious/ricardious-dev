@@ -38,3 +38,24 @@
 	--color-text-disabled2: var(--text-disabled2);
 	--color-text-disabled3: var(--text-disabled3);
 }
+
+/* FONTS */
+@font-face {
+	font-family: "NeueMontrealLight";
+	src: url("/fonts/NeueMontreal-Light.otf");
+}
+
+@font-face {
+	font-family: "NeueMontrealRegular";
+	src: url("/fonts/NeueMontreal-Regular.otf");
+}
+
+@font-face {
+	font-family: "Ginger";
+	src: url("/fonts/Chloe-Regular.otf");
+}
+
+@font-face {
+	font-family: "Romie";
+	src: url("/fonts/Romie-Regular.otf");
+}
