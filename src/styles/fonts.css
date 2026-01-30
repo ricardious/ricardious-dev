@@ -1,0 +1,37 @@
+@theme {
+	--font-neue: "NeueMontreal", system-ui, sans-serif;
+	--font-ginger: "Ginger", serif;
+	--font-romie: "Romie", serif;
+}
+
+@font-face {
+	font-family: "NeueMontreal";
+	src: url("/fonts/NeueMontreal-Light.otf") format("opentype");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "NeueMontreal";
+	src: url("/fonts/NeueMontreal-Regular.otf") format("opentype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Ginger";
+	src: url("/fonts/Chloe-Regular.otf") format("opentype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Romie";
+	src: url("/fonts/Romie-Regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
