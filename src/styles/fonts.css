@@ -1,7 +1,9 @@
 @theme {
-	--font-neue: "NeueMontreal", system-ui, sans-serif;
-	--font-ginger: "Ginger", serif;
-	--font-romie: "Romie", serif;
+	--font-body:
+		"NeueMontrealRegular", -apple-system, BlinkMacSystemFont, sans-serif;
+	--font-body-light: "NeueMontrealLight", sans-serif;
+	--font-heading: "Ginger", Georgia, serif;
+	--font-display: "Romie", Georgia, serif;
 }
 
 @font-face {
