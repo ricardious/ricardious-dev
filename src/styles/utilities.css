@@ -1,0 +1,71 @@
+@utility spacer {
+	height: 20vh;
+
+	@media screen and (max-width: 768px) {
+		height: 10vh;
+	}
+}
+
+@utility demi-spacer {
+	height: 10vh;
+
+	@media screen and (max-width: 768px) {
+		height: 10vh;
+	}
+}
+
+@utility big-spacer {
+	height: 30vh;
+
+	@media screen and (max-width: 768px) {
+		height: 20vh;
+	}
+}
+
+@utility margin-small {
+	margin: 8px;
+
+	@media screen and (min-width: 480px) {
+		margin: 12px;
+	}
+
+	@media screen and (min-width: 768px) {
+		margin: 12px;
+	}
+
+	@media screen and (min-width: 1024px) {
+		margin: 18px;
+	}
+
+	@media screen and (min-width: 1200px) {
+		margin: 20px;
+	}
+
+	@media screen and (min-width: 1600px) {
+		margin: 2vw;
+	}
+}
+
+@utility margin-page {
+	padding: 0 10vw;
+
+	@media (max-width: 769px) {
+		padding: 0 4vw;
+	}
+}
+
+@utility padding-horizontal {
+	padding: 0 1.5vw;
+
+	@media (max-width: 769px) {
+		padding: 0 4vw;
+	}
+}
+
+@utility padding-global {
+	padding: 1.5vw;
+
+	@media (max-width: 769px) {
+		padding: 4vw;
+	}
+}
