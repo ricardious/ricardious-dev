@@ -41,7 +41,7 @@ const lineId = `${id}-line`;
 
     let progress = 0;
     let targetProgress = 0;
-    let animationFrame: number;
+    let _animationFrame: number;
     let isComplete = false;
 
     function updateProgress(value: number) {
@@ -54,11 +54,11 @@ const lineId = `${id}-line`;
       if (progress < targetProgress) {
         const increment = Math.max(0.5, (targetProgress - progress) * 0.1);
         updateProgress(Math.min(progress + increment, targetProgress));
-        animationFrame = requestAnimationFrame(animate);
+        _animationFrame = requestAnimationFrame(animate);
       } else if (isComplete && progress >= 100) {
         hideLoader();
       } else {
-        animationFrame = requestAnimationFrame(animate);
+        _animationFrame = requestAnimationFrame(animate);
       }
     }
 
