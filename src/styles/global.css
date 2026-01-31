@@ -1,8 +1,19 @@
 @import "tailwindcss";
-@import "./theme.css";
 @import "./fonts.css";
+@import "./theme.css";
+@import "./loader.css";
+@import "./typography.css";
+@import "./utilities.css";
 
 @layer base {
+	html,
+	body {
+		background: var(--color-background);
+		margin: 0;
+		padding: 0;
+		transition: background-color 0.3s ease;
+	}
+
 	* {
 		margin: 0;
 		padding: 0;
@@ -21,9 +32,12 @@
 	}
 
 	body {
-		background: var(--color-background);
 		overflow-x: hidden;
-		transition: color 0.3s;
 		font-weight: 100;
+		font-family: var(--font-body);
+	}
+
+	a {
+		text-decoration: none;
 	}
 }
