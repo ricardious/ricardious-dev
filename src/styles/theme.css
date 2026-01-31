@@ -1,32 +1,46 @@
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark {
+	&:where(.dark, .dark *) {
+		@slot;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		&:where(.system, .system *) {
+			@slot;
+		}
+	}
+}
 
 @theme {
 	--color-background-base: oklch(0.973 0 0);
 	--color-panel-base: oklch(1 0 0);
+	--color-opacity: oklch(0 0 0 / 0.56);
+	--color-placeholder: oklch(0.213 0 0);
+	--color-primary: oklch(0.745 0.037 266.776);
 	--color-text-base: oklch(0.333 0 0);
 	--color-text-secondary-base: oklch(0.543 0 0);
 	--color-text-disabled-base: oklch(0.643 0 0);
 	--color-text-disabled2-base: oklch(0.863 0 0);
 	--color-text-disabled3-base: oklch(0.255 0 0);
+	--spacing-page: 10vw;
+	--spacing-horizontal: 1.5vw;
+	--spacing-global: 1.5vw;
+	--radius: 0.5rem;
+	--radius-button: 30px;
 }
 
 @theme inline {
 	--color-background: var(--color-background-base);
 	--color-panel: var(--color-panel-base);
-	--color-opacity: oklch(0 0 0 / 0.56);
-	--color-placeholder: oklch(0.213 0 0);
-	--color-primary: oklch(0.745 0.037 266.776);
 	--color-text-standard: var(--color-text-base);
 	--color-text: var(--color-text-secondary-base);
 	--color-text-disabled: var(--color-text-disabled-base);
 	--color-text-disabled2: var(--color-text-disabled2-base);
 	--color-text-disabled3: var(--color-text-disabled3-base);
-
-	--radius: 0.5rem;
 }
 
 @layer theme {
-	* {
+	:root,
+	:host {
 		@variant dark {
 			--color-background-base: oklch(0.078 0 0);
 			--color-panel-base: oklch(1 0 0 / 0.075);
