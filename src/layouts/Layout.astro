@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
+import MouseFollower from "../components/atoms/MouseFollower";
 import Loader from "../components/organisms/Loader.astro";
 
 interface Props {
@@ -27,6 +28,7 @@ const { title, description = "Ricardious Portfolio" } = Astro.props;
   </head>
   <body>
     <Loader />
+    <MouseFollower client:only="react" />
     <slot />
   </body>
 </html>
