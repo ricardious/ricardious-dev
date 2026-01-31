@@ -1,0 +1,131 @@
+---
+import LoaderContent from "../molecules/LoaderContent.astro";
+
+interface Props {
+  title?: string;
+  id?: string;
+  animationDuration?: number;
+  fallbackTimeout?: number;
+}
+
+const {
+  title = "ALEX RICARDO",
+  id = "loader",
+  animationDuration = 600,
+  fallbackTimeout = 5000,
+} = Astro.props;
+
+const percentageId = `${id}-percentage`;
+const lineId = `${id}-line`;
+---
+
+<div
+  class="loader"
+  id={id}
+  data-animation-duration={animationDuration}
+  data-fallback-timeout={fallbackTimeout}
+>
+  <LoaderContent title={title} percentageId={percentageId} lineId={lineId} />
+</div>
+
+<script>
+  function initLoader() {
+    const loader = document.querySelector(".loader") as HTMLElement | null;
+    if (!loader) return;
+
+    const id = loader.id;
+    const percentage = document.getElementById(`${id}-percentage`);
+    const line = document.getElementById(`${id}-line`);
+    const animationDuration = Number(loader.dataset.animationDuration) || 600;
+    const fallbackTimeout = Number(loader.dataset.fallbackTimeout) || 5000;
+
+    let progress = 0;
+    let targetProgress = 0;
+    let animationFrame: number;
+    let isComplete = false;
+
+    function updateProgress(value: number) {
+      progress = value;
+      if (percentage) percentage.textContent = `${Math.round(progress)}%`;
+      if (line) line.style.width = `${progress}%`;
+    }
+
+    function animate() {
+      if (progress < targetProgress) {
+        const increment = Math.max(0.5, (targetProgress - progress) * 0.1);
+        updateProgress(Math.min(progress + increment, targetProgress));
+        animationFrame = requestAnimationFrame(animate);
+      } else if (isComplete && progress >= 100) {
+        hideLoader();
+      } else {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    }
+
+    function hideLoader() {
+      if (loader) {
+        loader.style.opacity = "0";
+        loader.style.transition = `opacity ${animationDuration}ms ease`;
+        setTimeout(() => {
+          loader.style.display = "none";
+        }, animationDuration);
+      }
+    }
+
+    function resetLoader() {
+      if (loader) {
+        loader.style.display = "flex";
+        loader.style.opacity = "1";
+        isComplete = false;
+        progress = 0;
+        targetProgress = 30;
+        updateProgress(0);
+        animate();
+      }
+    }
+
+    function startLoading() {
+      targetProgress = 30;
+      animate();
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => {
+          targetProgress = 70;
+        });
+      } else {
+        targetProgress = 70;
+      }
+
+      window.addEventListener("load", () => {
+        targetProgress = 100;
+        isComplete = true;
+      });
+
+      setTimeout(() => {
+        if (!isComplete) {
+          targetProgress = 100;
+          isComplete = true;
+        }
+      }, fallbackTimeout);
+    }
+
+    // Handle View Transitions
+    document.addEventListener("astro:before-preparation", resetLoader);
+
+    document.addEventListener("astro:after-preparation", () => {
+      targetProgress = 70;
+    });
+
+    document.addEventListener("astro:page-load", () => {
+      targetProgress = 100;
+      isComplete = true;
+    });
+
+    // Initial load
+    startLoading();
+  }
+
+  // Run on initial load and after navigation
+  initLoader();
+  document.addEventListener("astro:after-swap", initLoader);
+</script>

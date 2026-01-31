@@ -1,0 +1,13 @@
+---
+interface Props {
+  text: string;
+  class?: string;
+  id?: string;
+}
+
+const { text, class: className = "", id } = Astro.props;
+---
+
+<div class:list={["text-h2-load", className]} id={id}>
+  {text}
+</div>

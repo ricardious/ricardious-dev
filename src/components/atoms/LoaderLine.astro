@@ -1,0 +1,9 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id = "loader-line" } = Astro.props;
+---
+
+<div class="line" id={id}></div>

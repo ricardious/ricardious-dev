@@ -1,0 +1,24 @@
+---
+import LoaderLine from "../atoms/LoaderLine.astro";
+import LoaderText from "../atoms/LoaderText.astro";
+
+interface Props {
+  title?: string;
+  percentageId?: string;
+  lineId?: string;
+}
+
+const {
+  title = "ALEX RICARDO",
+  percentageId = "loader-percentage",
+  lineId = "loader-line",
+} = Astro.props;
+---
+
+<div class="content">
+  <div class="text">
+    <LoaderText text={title} class="saol" />
+    <LoaderText text="00%" class="percentage" id={percentageId} />
+  </div>
+  <LoaderLine id={lineId} />
+</div>
