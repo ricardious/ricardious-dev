@@ -1,0 +1,36 @@
+---
+import EnvelopeClosed from "@assets/icons/envelope-closed.svg";
+import NavLink from "@atoms/NavLink.astro";
+
+interface Props {
+  name?: string;
+  location?: string;
+  email?: string;
+}
+
+const {
+  name = "ALEX RICARDO",
+  location = "Guatemala, GT",
+  email = "castaneda.systems@gmail.com",
+} = Astro.props;
+---
+
+<header
+  class="padding-global fixed z-100 flex w-screen items-start justify-between mix-blend-difference"
+>
+  <a href="/" class="text-h6 text-white">
+    <span class="name">{name}</span>
+    <br />
+    <span class="text-description text-white/50">{location}</span>
+  </a>
+
+  <nav class="flex items-center gap-6 max-md:gap-5">
+    <NavLink href="/about">[ ABOUT ]</NavLink>
+    <a
+      href={`mailto:${email}`}
+      class="text-white transition-opacity hover:opacity-70"
+    >
+      <EnvelopeClosed class="size-4" />
+    </a>
+  </nav>
+</header>
