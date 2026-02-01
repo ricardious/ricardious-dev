@@ -1,0 +1,25 @@
+---
+interface Props {
+  name: string;
+  separatorPosition?: "default" | "text-top" | "text-bot";
+}
+
+const { name, separatorPosition = "default" } = Astro.props;
+
+const separatorClasses = {
+  default: "mt-2.5 mb-6",
+  "text-top": "mt-2.5 mb-12 max-md:mb-6",
+  "text-bot": "mt-12 mb-6 max-md:mt-6",
+};
+---
+
+<div class="w-full mt-[15vh] text-center max-md:mt-25">
+  <div class="text-headline">{name}</div>
+  <div
+    class:list={[
+      "w-full h-px bg-text-disabled2 transition-colors duration-600",
+      separatorClasses[separatorPosition],
+    ]}
+  >
+  </div>
+</div>
