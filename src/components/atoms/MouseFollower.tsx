@@ -1,6 +1,26 @@
 import gsap from "gsap";
 import lerp from "lerp";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const useMediaQuery = (query: string): boolean => {
+  const [matches, setMatches] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia(query).matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(query);
+    setMatches(mediaQuery.matches);
+
+    const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, [query]);
+
+  return matches;
+};
 
 const easeInOutQuad = (x: number): number =>
   x < 0.5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2;
@@ -11,6 +31,8 @@ let mousePos = {
 };
 
 const MouseFollower = () => {
+  const isDesktop = useMediaQuery("(min-width: 769px)");
+
   const $mouseFollower = useRef<HTMLDivElement>(null);
   const $outerCircleWrapper = useRef<HTMLDivElement>(null);
   const $outerCircle = useRef<HTMLDivElement>(null);
@@ -146,6 +168,8 @@ const MouseFollower = () => {
       cancelAnimationFrame(raf);
     };
   }, []);
+
+  if (!isDesktop) return null;
 
   return (
     <div
