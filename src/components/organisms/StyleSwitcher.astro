@@ -1,0 +1,50 @@
+---
+import NavLink from "@atoms/NavLink.astro";
+---
+
+<footer
+  class="fixed bottom-0 left-0 z-100 flex w-screen items-center justify-center px-[2.5vw] py-4 font-body text-xs mix-blend-difference pointer-events-none max-md:justify-start"
+>
+  <nav class="pointer-events-auto flex gap-6 max-md:gap-5">
+    <NavLink href="/">[ Works ]</NavLink>
+    <NavLink href="/random">[ RANDOM ]</NavLink>
+  </nav>
+  <button
+    id="theme-toggle"
+    class="absolute right-[2.5vw] pointer-events-auto size-4.5 rounded-full bg-white border-none transition-colors duration-400 cursor-pointer max-md:right-[4vw]"
+    aria-label="Toggle theme"
+  >
+  </button>
+</footer>
+
+<script>
+  function initThemeToggle() {
+    const themeToggle = document.getElementById("theme-toggle");
+    const html = document.documentElement;
+
+    const switchTheme = () => {
+      const isDark =
+        html.classList.contains("dark") ||
+        (html.classList.contains("system") &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches);
+      const newTheme = isDark ? "light" : "dark";
+      html.classList.remove("light", "dark", "system");
+      html.classList.add(newTheme);
+      localStorage.setItem("theme", newTheme);
+    };
+
+    themeToggle?.addEventListener("click", () => {
+      if (!document.startViewTransition) {
+        switchTheme();
+        return;
+      }
+      document.startViewTransition(switchTheme);
+    });
+  }
+
+  // Run on initial load
+  initThemeToggle();
+
+  // Re-run after view transitions
+  document.addEventListener("astro:after-swap", initThemeToggle);
+</script>
