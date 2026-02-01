@@ -13,8 +13,8 @@ const active = isActive || currentPath === href;
 <a
   href={href}
   class:list={[
-    "text-h6 text-white/40 transition-colors hover:text-white",
-    { "text-white line-through": active },
+    "text-h6 transition-colors",
+    active ? "text-white line-through" : "text-white/40 hover:text-white",
     className,
   ]}
 >
