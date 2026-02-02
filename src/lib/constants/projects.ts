@@ -20,7 +20,7 @@ export interface Project {
 const getImage = (id: number, width = 800, height = 600) =>
   `https://picsum.photos/id/${id}/${width}/${height}`;
 
-let projectsData: Omit<Project, "id" | "index">[] = [
+const projectsData: Omit<Project, "id" | "index">[] = [
   {
     name: "Digital Portfolio",
     path: "digital-portfolio",
