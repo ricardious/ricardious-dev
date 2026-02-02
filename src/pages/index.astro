@@ -1,5 +1,8 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import WorksScene from "@organisms/WorksScene";
 ---
 
-<Layout title="Ricardious" />
+<Layout title="Ricardious | Works">
+  <WorksScene client:only="react" />
+</Layout>
