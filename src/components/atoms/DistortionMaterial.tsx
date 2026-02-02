@@ -1,5 +1,5 @@
 import { shaderMaterial } from "@react-three/drei";
-import { noiseFunction } from "@utils/glsl";
+import { noiseFunction } from "@/lib/helpers/glsl";
 
 const DistortionMaterial = shaderMaterial(
   {
