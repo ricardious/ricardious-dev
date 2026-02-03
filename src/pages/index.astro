@@ -1,8 +1,11 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import WorksScene from "@organisms/WorksScene";
+import PageTemplate from "@templates/PageTemplate.astro";
 ---
 
 <Layout title="Ricardious | Works">
-  <WorksScene client:only="react" />
+  <PageTemplate hasFooter={false}>
+    <WorksScene client:only="react" />
+  </PageTemplate>
 </Layout>
