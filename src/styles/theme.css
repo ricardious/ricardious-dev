@@ -26,6 +26,16 @@
 	--spacing-global: 1.5vw;
 	--radius: 0.5rem;
 	--radius-button: 30px;
+
+	--animate-fadeIn: fadeIn 0.5s ease-in forwards;
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
 }
 
 @theme inline {
