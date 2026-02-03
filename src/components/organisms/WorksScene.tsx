@@ -1,6 +1,7 @@
 import arrowRight from "@assets/icons/arrow-right.svg";
 import DistortionMaterial from "@atoms/DistortionMaterial";
-import { Html, useTexture } from "@react-three/drei";
+import { useCursorStore } from "@lib/store/cursor";
+import { Html, useProgress, useTexture } from "@react-three/drei";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import {
@@ -15,7 +16,6 @@ import {
 import type { Group, Mesh, ShaderMaterial, Texture } from "three";
 import { Vector3 } from "three";
 import projects, { type Project } from "@/lib/constants/projects";
-import { useCursorStore } from "@lib/store/cursor";
 
 // Custom type for DistortionMaterial with uniforms
 interface DistortionMaterialType extends ShaderMaterial {
@@ -62,9 +62,10 @@ const planePositions = {
   desktop: { distanceX: 0.16, distanceY: 1.18 },
 };
 
-// Simple lerp function
-const lerp = (start: number, end: number, factor: number) => {
-  return start + (end - start) * factor;
+// Simple lerp function (frame-independent when delta is provided)
+const lerp = (start: number, end: number, factor: number, delta = 1) => {
+  const t = 1 - (1 - factor) ** (delta * 60);
+  return start + (end - start) * t;
 };
 
 // Map range utility
@@ -117,7 +118,7 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
     matRef.current.time += delta;
 
     const newSpeed = Math.abs(scrollArea.current.scrollTop - lastScrollTop);
-    speed = lerp(speed, newSpeed, 0.03);
+    speed = lerp(speed, newSpeed, 0.03, delta);
 
     matRef.current.speed = speed;
     lastScrollTop = scrollArea.current.scrollTop;
@@ -131,8 +132,9 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
       Math.PI / 2,
       planePositions[media].distanceX * index,
     );
-    const pos = new Vector3().copy(meshRef.current.position);
-    pos.multiplyScalar(2);
+    let pos = new Vector3().copy(meshRef.current.position);
+    // by multiplying the vector by a scalar of 2 we can get the "opposite" of the vector from plane pos to origin
+    pos = pos.multiplyScalar(2);
     meshRef.current.lookAt(pos);
     meshRef.current.position.y += index / planePositions[media].distanceY;
   }, [media, index]);
@@ -186,8 +188,9 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
         rgbShiftStrength={0}
       />
       <Html
+        portal={{ current: document.body }}
         center
-        className={`pointer-events-none -z-10 transition-opacity duration-200 ${isInView ? "opacity-100" : "opacity-0"}`}
+        className={`pointer-events-none -z-10 transition-opacity duration-200 ${isInView ? "" : "hidden"}`}
         position={[0, 0, 0.25]}
       >
         <div className="flex items-center flex-col flex-nowrap">
@@ -238,7 +241,7 @@ function Scene() {
     return () => window.removeEventListener("resize", checkMedia);
   }, []);
 
-  useFrame(({ camera }) => {
+  useFrame(({ camera }, delta) => {
     if (!scrollArea.current) return;
 
     const scrollHeight =
@@ -262,13 +265,14 @@ function Scene() {
       planePositions[media].distanceX * scrollValue,
     );
 
-    camera.position.x = lerp(camera.position.x, camPosition.x, 0.1);
-    camera.position.y = lerp(camera.position.y, camPosition.y, 0.1);
-    camera.position.z = lerp(camera.position.z, camPosition.z, 0.1);
+    camera.position.x = lerp(camera.position.x, camPosition.x, 0.1, delta);
+    camera.position.y = lerp(camera.position.y, camPosition.y, 0.1, delta);
+    camera.position.z = lerp(camera.position.z, camPosition.z, 0.1, delta);
     camera.position.y = lerp(
       camera.position.y,
       camera.position.y + scrollValue / planePositions[media].distanceY,
       0.1,
+      delta,
     );
     camera.lookAt(0, scrollValue / planePositions[media].distanceY, 0);
     camera.updateProjectionMatrix();
@@ -293,6 +297,15 @@ export default function WorksScene() {
   const scrollProgressBar = useRef<HTMLDivElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
   const scrollProgressContainer = useRef<HTMLDivElement>(null);
+  const { progress } = useProgress();
+
+  // Animate container width based on loading progress
+  useLayoutEffect(() => {
+    if (scrollProgressContainer.current) {
+      const width = `${progress}vw`;
+      gsap.to(scrollProgressContainer.current, { width, duration: 1 });
+    }
+  }, [progress]);
 
   useLayoutEffect(() => {
     if (scrollArea.current) {
@@ -312,8 +325,10 @@ export default function WorksScene() {
       const scrollHeight =
         scrollArea.current.children[0].clientHeight - window.innerHeight;
       if (scrollHeight > 0) {
-        const progress = (scrollTop / scrollHeight) * 100;
-        scrollProgressBar.current.style.width = `${progress}%`;
+        const scrollProgress = (scrollTop / scrollHeight) * 100;
+        gsap.to(scrollProgressBar.current, {
+          width: `${scrollProgress}%`,
+        });
       }
     }
   };
@@ -323,6 +338,7 @@ export default function WorksScene() {
       <Canvas
         dpr={[1, 1.5]}
         camera={{ position: [0, 0, 24], far: 50 }}
+        // As the canvas is under the scroll div, we define the scroll div as the event receiver
         onCreated={(state) => {
           if (scrollArea.current) {
             state.events.connect?.(scrollArea.current);
@@ -348,14 +364,14 @@ export default function WorksScene() {
       </div>
 
       <div
-        className={`absolute left-1/2 -translate-x-1/2 bottom-28 font-body text-text z-1000 mb-4 uppercase tracking-wide text-[10px] transition-opacity duration-1000 ${hasScrolled ? "opacity-0" : "opacity-100"}`}
+        className={`absolute left-1/2 -translate-x-1/2 bottom-28 font-body text-text z-1000 mb-4 uppercase tracking-wide text-[10px] transition-opacity duration-1200 delay-300 ${hasScrolled ? "opacity-0" : "opacity-100"}`}
       >
         ( scroll down )
       </div>
 
       <div
         ref={scrollProgressContainer}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-screen h-0.5 bg-text-disabled2 max-md:bottom-0"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-screen h-0.5 bg-text-disabled2 max-md:bottom-0 opacity-0 animate-fadeIn"
       >
         <div
           ref={scrollProgressBar}
