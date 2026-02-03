@@ -1,3 +1,4 @@
+import arrowRight from "@assets/icons/arrow-right.svg";
 import DistortionMaterial from "@atoms/DistortionMaterial";
 import { Html, useTexture } from "@react-three/drei";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
@@ -14,6 +15,7 @@ import {
 import type { Group, Mesh, ShaderMaterial, Texture } from "three";
 import { Vector3 } from "three";
 import projects, { type Project } from "@/lib/constants/projects";
+import { useCursorStore } from "@lib/store/cursor";
 
 // Custom type for DistortionMaterial with uniforms
 interface DistortionMaterialType extends ShaderMaterial {
@@ -92,6 +94,7 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
 
   const [hovering, setHovering] = useState(false);
   const hoverValue = useRef({ value: 1 });
+  const setHoveringCanvas = useCursorStore((state) => state.setHoveringCanvas);
 
   const [media, setMedia] = useState<"mobile" | "tablet" | "desktop">(
     "desktop",
@@ -135,6 +138,7 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
   }, [media, index]);
 
   useEffect(() => {
+    setHoveringCanvas(hovering);
     const tween = gsap.to(hoverValue.current, {
       value: hovering ? 0 : 1,
       onUpdate: () => {
@@ -145,8 +149,9 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
     });
     return () => {
       tween.kill();
+      setHoveringCanvas(false);
     };
-  }, [hovering]);
+  }, [hovering, setHoveringCanvas]);
 
   const clickHandler = () => {
     if (!scrollArea.current) return;
@@ -186,22 +191,21 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
         position={[0, 0, 0.25]}
       >
         <div className="flex items-center flex-col flex-nowrap">
-          <h1 className="font-serif text-[14vw] md:text-[10vw] lg:text-[8vw] uppercase whitespace-nowrap text-white font-light leading-[0.9]">
+          <h1 className="text-h1 serif uppercase whitespace-nowrap text-white">
             {project.name}
           </h1>
           <div
             className={`mt-4 flex flex-row flex-nowrap items-center transition-transform duration-300 ${hovering ? "translate-x-4" : ""}`}
           >
-            <span className="text-white font-body uppercase whitespace-nowrap text-[10px] tracking-wide">
+            <span className="text-white font-body uppercase whitespace-nowrap text-[10px] tracking-[0.4px]">
               open project
             </span>
             <div className="ml-2.5 w-5 h-5 rounded-full bg-white flex items-center justify-center">
-              <svg
-                className="w-[60%] h-[60%] fill-black opacity-60"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
-              </svg>
+              <img
+                src={arrowRight.src}
+                alt=""
+                className="w-[60%] h-[60%] opacity-60"
+              />
             </div>
           </div>
         </div>
