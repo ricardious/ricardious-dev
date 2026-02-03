@@ -1,0 +1,23 @@
+---
+import Footer from "@organisms/Footer.astro";
+
+interface Props {
+  hasFooter?: boolean;
+}
+
+const { hasFooter = true } = Astro.props;
+---
+
+<div class="w-full">
+  <slot />
+  {hasFooter && <Footer />}
+</div>
+
+<script>
+  function resetScroll() {
+    window.scrollTo(0, 0);
+  }
+
+  resetScroll();
+  document.addEventListener("astro:after-swap", resetScroll);
+</script>
