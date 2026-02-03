@@ -205,7 +205,7 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
           <div
             className={`mt-4 flex flex-row flex-nowrap items-center transition-transform duration-300 ${hovering ? "translate-x-4" : ""}`}
           >
-            <span className="text-white font-body uppercase whitespace-nowrap text-[10px] tracking-[0.4px]">
+            <span className="text-white font-body font-normal uppercase whitespace-nowrap text-[10px] tracking-[0.4px]">
               open project
             </span>
             <div className="ml-2.5 w-5 h-5 rounded-full bg-white flex items-center justify-center">
