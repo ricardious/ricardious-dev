@@ -2,7 +2,12 @@ import arrowRight from "@assets/icons/arrow-right.svg";
 import DistortionMaterial from "@atoms/DistortionMaterial";
 import { useCursorStore } from "@lib/store/cursor";
 import { Html, useProgress, useTexture } from "@react-three/drei";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
+import {
+  Canvas,
+  extend,
+  events as r3fEvents,
+  useFrame,
+} from "@react-three/fiber";
 import gsap from "gsap";
 import {
   createRef,
@@ -337,12 +342,28 @@ export default function WorksScene() {
     <div className="bg-background transition-colors duration-600 h-screen w-screen relative overflow-hidden">
       <Canvas
         dpr={[1, 1.5]}
-        camera={{ position: [0, 0, 24], far: 50 }}
-        // As the canvas is under the scroll div, we define the scroll div as the event receiver
+        camera={{ position: [0, 0, 24], far: 100 }}
         onCreated={(state) => {
-          if (scrollArea.current) {
-            state.events.connect?.(scrollArea.current);
-          }
+          if (scrollArea.current) state.events.connect?.(scrollArea.current);
+        }}
+        events={(store) => {
+          const base = r3fEvents(store);
+
+          return {
+            ...base,
+            compute: (event, state) => {
+              const scrollTop = scrollArea.current?.scrollTop ?? 0;
+
+              const x = event.offsetX;
+              const y = event.offsetY - scrollTop;
+
+              state.pointer.set(
+                (x / state.size.width) * 2 - 1,
+                -(y / state.size.height) * 2 + 1,
+              );
+              state.raycaster.setFromCamera(state.pointer, state.camera);
+            },
+          };
         }}
       >
         <Suspense fallback={null}>
