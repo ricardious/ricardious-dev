@@ -1,3 +1,4 @@
+import { useCursorStore } from "@lib/store/cursor";
 import gsap from "gsap";
 import lerp from "lerp";
 import { useEffect, useRef, useState } from "react";
@@ -32,6 +33,7 @@ let mousePos = {
 
 const MouseFollower = () => {
   const isDesktop = useMediaQuery("(min-width: 769px)");
+  const isHoveringCanvas = useCursorStore((state) => state.isHoveringCanvas);
 
   const $mouseFollower = useRef<HTMLDivElement>(null);
   const $outerCircleWrapper = useRef<HTMLDivElement>(null);
@@ -112,6 +114,11 @@ const MouseFollower = () => {
       mousePos = { x: clientX, y: clientY };
       isHovering = false;
 
+      // Check if hovering over 3D canvas meshes
+      if (isHoveringCanvas) {
+        isHovering = true;
+      }
+
       if ($outerCircleWrapper.current && target instanceof HTMLElement) {
         if (
           target.nodeName === "BUTTON" ||
@@ -167,7 +174,7 @@ const MouseFollower = () => {
       window.removeEventListener("mouseup", mouseupHandler);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [isHoveringCanvas]);
 
   if (!isDesktop) return null;
 
