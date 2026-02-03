@@ -6,4 +6,8 @@ interface Props {
 const { id = "loader-line" } = Astro.props;
 ---
 
-<div class="line" id={id}></div>
+<div
+  class="mt-0 h-0.5 bg-text-standard w-0 self-start transition-[width,background-color] duration-200 ease-in-out"
+  id={id}
+>
+</div>

@@ -8,6 +8,12 @@ interface Props {
 const { text, class: className = "", id } = Astro.props;
 ---
 
-<div class:list={["text-h2-load", className]} id={id}>
+<div
+  class:list={[
+    "font-body text-[60px] max-md:text-[40px] max-sm:text-[20px] text-white tracking-[0] mb-4",
+    className,
+  ]}
+  id={id}
+>
   {text}
 </div>

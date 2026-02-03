@@ -20,7 +20,7 @@ const lineId = `${id}-line`;
 ---
 
 <div
-  class="loader"
+  class="fixed top-0 left-0 z-10000 flex items-end w-screen h-screen bg-background transition-[background-color,opacity] duration-300"
   id={id}
   data-animation-duration={animationDuration}
   data-fallback-timeout={fallbackTimeout}
@@ -30,12 +30,11 @@ const lineId = `${id}-line`;
 
 <script>
   function initLoader() {
-    const loader = document.querySelector(".loader") as HTMLElement | null;
+    const loader = document.getElementById("loader") as HTMLElement | null;
     if (!loader) return;
 
-    const id = loader.id;
-    const percentage = document.getElementById(`${id}-percentage`);
-    const line = document.getElementById(`${id}-line`);
+    const percentage = document.getElementById("loader-percentage");
+    const line = document.getElementById("loader-line");
     const animationDuration = Number(loader.dataset.animationDuration) || 600;
     const fallbackTimeout = Number(loader.dataset.fallbackTimeout) || 5000;
 

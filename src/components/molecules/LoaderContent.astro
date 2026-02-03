@@ -15,9 +15,11 @@ const {
 } = Astro.props;
 ---
 
-<div class="content">
-  <div class="text">
-    <LoaderText text={title} class="saol" />
+<div
+  class="absolute left-1/2 -translate-x-1/2 bottom-10 w-[90%] flex items-center flex-col flex-nowrap"
+>
+  <div class="w-full flex flex-row flex-nowrap items-center justify-between">
+    <LoaderText text={title} class="font-heading" />
     <LoaderText text="00%" class="percentage" id={percentageId} />
   </div>
   <LoaderLine id={lineId} />
