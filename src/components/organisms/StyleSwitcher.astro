@@ -38,7 +38,11 @@ import NavLink from "@atoms/NavLink.astro";
         switchTheme();
         return;
       }
-      document.startViewTransition(switchTheme);
+      html.classList.add("theme-transitioning");
+      const transition = document.startViewTransition(switchTheme);
+      transition.finished.finally(() => {
+        html.classList.remove("theme-transitioning");
+      });
     });
   }
 

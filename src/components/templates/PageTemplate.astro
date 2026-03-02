@@ -13,27 +13,9 @@ const { hasFooter = true, hasTransitionPanel = false } = Astro.props;
   <slot />
   {hasFooter && <Footer />}
 </div>
-{
-  hasTransitionPanel && (
-    <div class="pointer-events-none fixed inset-0 z-10">
-      <div class="h-full w-full bg-background animate-transitionPanelIn" />
-    </div>
-  )
-}
 
 <style>
-  @keyframes transitionPanelIn {
-    from {
-      transform: translateY(0%);
-    }
-    to {
-      transform: translateY(100%);
-    }
-  }
-
-  .animate-transitionPanelIn {
-    animation: transitionPanelIn 0.5s ease-out both;
-  }
+  /* Transition panel styles are now handled globally via view transitions */
 </style>
 
 <script>

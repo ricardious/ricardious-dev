@@ -64,7 +64,7 @@
 }
 
 /* Theme switch view transition */
-::view-transition-new(root) {
+.theme-transitioning::view-transition-new(root) {
 	mask:
 		url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="white"/></svg>')
 		center / 0 no-repeat;
@@ -72,14 +72,14 @@
 	animation-fill-mode: both;
 }
 
-::view-transition-old(root),
-.dark::view-transition-old(root) {
+.theme-transitioning::view-transition-old(root),
+.dark.theme-transitioning::view-transition-old(root) {
 	animation: none;
 	animation-fill-mode: both;
 	z-index: -1;
 }
 
-.dark::view-transition-new(root) {
+.dark.theme-transitioning::view-transition-new(root) {
 	animation: scale 1s;
 	animation-fill-mode: both;
 }

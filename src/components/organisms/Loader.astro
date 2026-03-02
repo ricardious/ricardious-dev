@@ -22,6 +22,7 @@ const lineId = `${id}-line`;
 <div
   class="fixed top-0 left-0 z-10000 flex items-end w-screen h-screen bg-background transition-[background-color,opacity] duration-300"
   id={id}
+  transition:persist="loader"
   data-animation-duration={animationDuration}
   data-fallback-timeout={fallbackTimeout}
 >
@@ -108,23 +109,10 @@ const lineId = `${id}-line`;
       }, fallbackTimeout);
     }
 
-    // Handle View Transitions
-    document.addEventListener("astro:before-preparation", resetLoader);
-
-    document.addEventListener("astro:after-preparation", () => {
-      targetProgress = 70;
-    });
-
-    document.addEventListener("astro:page-load", () => {
-      targetProgress = 100;
-      isComplete = true;
-    });
-
     // Initial load
     startLoading();
   }
 
-  // Run on initial load and after navigation
+  // Run on initial load
   initLoader();
-  document.addEventListener("astro:after-swap", initLoader);
 </script>
