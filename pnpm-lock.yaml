@@ -44,6 +44,9 @@ importers:
       three:
         specifier: ^0.182.0
         version: 0.182.0
+      three-lens-distortion:
+        specifier: github:ycw/three-lens-distortion
+        version: https://codeload.github.com/ycw/three-lens-distortion/tar.gz/2260f1ac53cde626c11c625eccfbed2af07e1f66
       uuid:
         specifier: ^13.0.0
         version: 13.0.0
@@ -2077,6 +2080,10 @@ packages:
   tapable@2.3.0:
     resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
     engines: {node: '>=6'}
+
+  three-lens-distortion@https://codeload.github.com/ycw/three-lens-distortion/tar.gz/2260f1ac53cde626c11c625eccfbed2af07e1f66:
+    resolution: {tarball: https://codeload.github.com/ycw/three-lens-distortion/tar.gz/2260f1ac53cde626c11c625eccfbed2af07e1f66}
+    version: 1.0.1
 
   three-mesh-bvh@0.8.3:
     resolution: {integrity: sha512-4G5lBaF+g2auKX3P0yqx+MJC6oVt6sB5k+CchS6Ob0qvH0YIhuUk1eYr7ktsIpY+albCqE80/FVQGV190PmiAg==}
@@ -4627,6 +4634,8 @@ snapshots:
   tailwindcss@4.1.18: {}
 
   tapable@2.3.0: {}
+
+  three-lens-distortion@https://codeload.github.com/ycw/three-lens-distortion/tar.gz/2260f1ac53cde626c11c625eccfbed2af07e1f66: {}
 
   three-mesh-bvh@0.8.3(three@0.182.0):
     dependencies:

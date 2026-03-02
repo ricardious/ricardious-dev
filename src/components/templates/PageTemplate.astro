@@ -3,15 +3,38 @@ import Footer from "@organisms/Footer.astro";
 
 interface Props {
   hasFooter?: boolean;
+  hasTransitionPanel?: boolean;
 }
 
-const { hasFooter = true } = Astro.props;
+const { hasFooter = true, hasTransitionPanel = false } = Astro.props;
 ---
 
 <div class="w-full">
   <slot />
   {hasFooter && <Footer />}
 </div>
+{
+  hasTransitionPanel && (
+    <div class="pointer-events-none fixed inset-0 z-10">
+      <div class="h-full w-full bg-background animate-transitionPanelIn" />
+    </div>
+  )
+}
+
+<style>
+  @keyframes transitionPanelIn {
+    from {
+      transform: translateY(0%);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  .animate-transitionPanelIn {
+    animation: transitionPanelIn 0.5s ease-out both;
+  }
+</style>
 
 <script>
   function resetScroll() {
