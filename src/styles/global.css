@@ -40,7 +40,6 @@
 		text-decoration: none;
 	}
 
-	/* Replicate cathy-folio framer motion exit/enter wiping animation natively using View Transitions */
 	html:not(.theme-transitioning)::view-transition-group(root) {
 		animation-duration: 0.9s;
 	}
@@ -69,7 +68,6 @@
 		50.1%, 100% { opacity: 1; }
 	}
 
-	/* The transition panel moving up to cover the screen, and moving back down to uncover the new page */
 	html:not(.theme-transitioning)::view-transition-image-pair(root)::after {
 		content: "";
 		position: absolute;

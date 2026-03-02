@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/react": "^4.4.2",
     "@react-three/drei": "^10.7.7",
     "@tailwindcss/vite": "^4.1.18",
@@ -22,6 +23,7 @@
     "tailwindcss": "^4.1.18",
     "three": "^0.182.0",
     "three-lens-distortion": "github:ycw/three-lens-distortion",
+    "typescript": "^5.9.3",
     "uuid": "^13.0.0",
     "zustand": "^5.0.11"
   },

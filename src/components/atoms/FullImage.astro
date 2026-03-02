@@ -1,0 +1,46 @@
+---
+/**
+ * FullImage: Parallax-style full-width image section.
+ * Pure CSS parallax, no JS library needed.
+ */
+interface Props {
+  src: string;
+  alt?: string;
+}
+
+const { src, alt = "" } = Astro.props;
+---
+
+<div
+  class="full-image relative w-screen overflow-hidden h-screen max-md:h-[60vh] max-md:mb-[10vh]"
+>
+  <div class="parallax-inner absolute inset-0">
+    <img
+      src={src}
+      alt={alt}
+      class="w-full h-[120%] object-cover object-top"
+      loading="lazy"
+    />
+  </div>
+</div>
+
+<style>
+  .full-image {
+    clip-path: inset(0);
+  }
+
+  .parallax-inner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+  }
+
+  @media (max-width: 765px) {
+    .parallax-inner {
+      height: 60vh;
+      position: absolute;
+    }
+  }
+</style>

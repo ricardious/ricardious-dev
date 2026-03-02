@@ -1,0 +1,115 @@
+---
+import FullImage from "@atoms/FullImage.astro";
+import Headline from "@atoms/Headline.astro";
+import ImageSlider from "@atoms/ImageSlider.astro";
+import TextSpawn from "@atoms/TextSpawn.astro";
+import Layout from "@layouts/Layout.astro";
+import ProjectsPreview from "@molecules/ProjectsPreview.astro";
+import PageTemplate from "@templates/PageTemplate.astro";
+
+const fullImageSrc = "https://picsum.photos/id/1035/1920/1080";
+---
+
+<Layout title="Ricardious | About">
+  <PageTemplate hasTransitionPanel={true}>
+    <!-- Hero -->
+    <section
+      class="hero relative flex h-screen w-screen items-center justify-center pb-[5vh] max-[900px]:margin-page max-[700px]:p-0"
+    >
+      <div class="relative flex flex-col flex-wrap">
+        <!-- First line -->
+        <div
+          class="line flex h-auto w-auto items-center gap-[2vw] whitespace-nowrap font-heading text-[clamp(2rem,11vw,20rem)] uppercase leading-[0.8] text-text-standard max-sm:flex-col max-sm:gap-4 max-sm:whitespace-normal max-sm:text-[14vw]"
+        >
+          <TextSpawn>Diseñador</TextSpawn>
+          <div
+            class="flex w-[15vw] flex-col gap-2 text-start max-sm:mb-4 max-sm:w-[50vw]"
+          >
+            <ImageSlider />
+          </div>
+        </div>
+        <!-- Second line -->
+        <div
+          class="line flex h-auto w-auto items-center gap-[2vw] whitespace-nowrap pl-16 font-heading text-[clamp(2rem,11vw,20rem)] uppercase leading-[0.8] text-text-standard max-sm:flex-col max-sm:gap-4 max-sm:whitespace-normal max-sm:pl-0 max-sm:text-[14vw]"
+        >
+          <TextSpawn direction="LEFT">& Desarrollador</TextSpawn>
+        </div>
+      </div>
+
+      <!-- Discover indicator -->
+      <div
+        class="discover absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center text-text"
+      >
+        <span class="font-body text-[10px] uppercase text-text">descubre</span>
+        <svg
+          class="mb-0.5 h-5 w-4 text-text"
+          viewBox="0 0 16 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M8 1v16M1 12l7 7 7-7"></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Biography -->
+    <section
+      class="margin-page flex w-screen flex-col flex-nowrap items-center"
+    >
+      <Headline name="Biografía" />
+      <div class="text-centered">
+        Soy Alex Ricardo Castañeda Rodríguez, diseñador y desarrollador
+        front-end dedicado a crear experiencias digitales únicas para marcas,
+        startups y la web.
+        <br /><br />
+        Me apasiona el desarrollo creativo, combino branding y diseño web para crear
+        identidades modernas y con propósito. Me guío por el minimalismo y la atención
+        al detalle para diseñar experiencias que dan vida a la visión de cada marca
+        con claridad y elegancia.
+      </div>
+      <a
+        class="button big"
+        href="https://github.com/ricardious"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Projects preview -->
+    <section class="margin-page flex w-screen flex-col items-center">
+      <div class="separator"></div>
+      <ProjectsPreview />
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Full image -->
+    <FullImage src={fullImageSrc} alt="moodboard" />
+  </PageTemplate>
+</Layout>
+
+<script>
+  function initDiscoverFade() {
+    const discover = document.querySelector(".discover") as HTMLElement | null;
+    if (!discover) return;
+
+    const onScroll = () => {
+      const opacity = Math.max(0, 1 - window.scrollY / 300);
+      discover.style.opacity = String(opacity);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  initDiscoverFade();
+  document.addEventListener("astro:after-swap", initDiscoverFade);
+</script>

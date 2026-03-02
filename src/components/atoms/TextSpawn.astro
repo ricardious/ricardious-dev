@@ -1,0 +1,51 @@
+---
+/**
+ * TextSpawn: Text reveal animation with overlay wipe.
+ * Replicates the framer-motion TextSpawn from cathy-folio-2021.
+ */
+interface Props {
+  direction?: "LEFT" | "RIGHT";
+  class?: string;
+}
+
+const { direction = "RIGHT", class: className } = Astro.props;
+---
+
+<span class:list={["inline-flex", className]} data-direction={direction}>
+  <span
+    class="text-spawn-anim relative inline-flex items-baseline overflow-hidden whitespace-nowrap"
+  >
+    <slot />
+    <span class="absolute top-0 left-0 h-full z-100 bg-primary"></span>
+  </span>
+</span>
+
+<script>
+  function initTextSpawn() {
+    document
+      .querySelectorAll<HTMLElement>(".text-spawn-anim")
+      .forEach((anim) => {
+        const overlay = anim.querySelector<HTMLElement>(
+          ":scope > span:last-child",
+        );
+        if (!overlay) return;
+
+        const wrapper = anim.parentElement;
+        const direction = wrapper?.dataset.direction || "RIGHT";
+        const target = direction === "LEFT" ? "-101%" : "101%";
+
+        // Measure text width (replicates useLayoutEffect + getBoundingClientRect)
+        const textWidth = anim.getBoundingClientRect().width;
+        overlay.style.width = `${textWidth}px`;
+
+        // Animate: 0.4s ease-out with 0.3s delay (same as original framer-motion)
+        requestAnimationFrame(() => {
+          overlay.style.transition = "transform 0.4s ease-out 0.3s";
+          overlay.style.transform = `translateX(${target})`;
+        });
+      });
+  }
+
+  initTextSpawn();
+  document.addEventListener("astro:after-swap", initTextSpawn);
+</script>

@@ -1,0 +1,61 @@
+---
+/**
+ * ImageSlider: Auto-cycling image slider with overlay transition.
+ * Uses vanilla JS (no React/GSAP needed).
+ */
+import projects from "@lib/constants/projects";
+
+const images = projects.map((p) => p.coverImgSmall);
+---
+
+<div
+  class="img-slider relative w-full aspect-3/2 overflow-hidden cursor-pointer"
+>
+  <div
+    class="slider-overlay absolute inset-0 bg-primary z-10 -translate-x-full"
+  >
+  </div>
+  <img
+    class="slider-img absolute w-full h-full object-cover"
+    src={images[0]}
+    alt="Project preview"
+    loading="eager"
+  />
+</div>
+
+<script define:vars={{ images }}>
+  function initSlider() {
+    const container = document.querySelector(".img-slider");
+    if (!container) return;
+
+    const img = container.querySelector(".slider-img");
+    const overlay = container.querySelector(".slider-overlay");
+    if (!img || !overlay) return;
+
+    let index = 0;
+
+    setInterval(() => {
+      // Slide overlay in
+      overlay.style.transition = "transform 0.3s ease";
+      overlay.style.transform = "translateX(0)";
+
+      setTimeout(() => {
+        // Switch image
+        index = (index + 1) % images.length;
+        img.src = images[index];
+
+        // Slide overlay out
+        overlay.style.transform = "translateX(100%)";
+
+        setTimeout(() => {
+          // Reset overlay position
+          overlay.style.transition = "none";
+          overlay.style.transform = "translateX(-100%)";
+        }, 300);
+      }, 300);
+    }, 5000);
+  }
+
+  initSlider();
+  document.addEventListener("astro:after-swap", initSlider);
+</script>

@@ -1,0 +1,97 @@
+---
+/**
+ * ProjectsPreview: Lists the first 4 projects with hover image effect.
+ * Astro component with vanilla JS for mouse-following hover images.
+ */
+import projects from "@lib/constants/projects";
+
+const previewProjects = projects.slice(0, 4);
+---
+
+<div class="projects-preview w-full">
+  {
+    previewProjects.map((project, index) => (
+      <div class="project-item group w-full" data-cover={project.coverImg}>
+        <a
+          href={`/works/${project.path}`}
+          class="project-link flex items-start transition-transform duration-300 ease-out hover:translate-x-4"
+        >
+          <span class="text-[12px] text-text mt-1.5 max-md:mt-1">
+            ({index + 1 < 10 ? `0${index + 1}` : index + 1})
+          </span>
+          <span class="ml-7 font-serif uppercase text-h1 max-md:ml-6.5 max-sm:ml-4.5">
+            {project.name}
+          </span>
+        </a>
+        <div class="separator" />
+      </div>
+    ))
+  }
+
+  <!-- More projects link -->
+  <div class="project-item w-full">
+    <a
+      href="/"
+      class="flex items-start transition-transform duration-300 ease-out hover:translate-x-4"
+    >
+      <span class="text-[12px] text-text mt-1.5 max-md:mt-1">(XX)</span>
+      <span
+        class="ml-7 font-serif uppercase text-h1 max-md:ml-6.5 max-sm:ml-4.5"
+      >
+        more projects
+      </span>
+    </a>
+    <div class="separator"></div>
+  </div>
+
+  <!-- Hover image follower (desktop only) -->
+  <div
+    class="hover-image fixed top-0 left-0 z-10 pointer-events-none opacity-0 transition-opacity duration-400 ease-out max-md:hidden"
+  >
+    <img class="w-[30vw] h-auto object-cover" src="" alt="" />
+  </div>
+</div>
+
+<script>
+  function initProjectsPreview() {
+    const hoverContainer = document.querySelector(
+      ".projects-preview .hover-image",
+    ) as HTMLElement | null;
+    const hoverImg = hoverContainer?.querySelector(
+      "img",
+    ) as HTMLImageElement | null;
+    if (!hoverContainer || !hoverImg) return;
+
+    const items = document.querySelectorAll<HTMLElement>(
+      ".project-item[data-cover]",
+    );
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      hoverContainer.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+
+    items.forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        const cover = item.dataset.cover;
+        if (cover && hoverImg) {
+          hoverImg.src = cover;
+          hoverContainer.style.opacity = "1";
+        }
+      });
+
+      item.addEventListener("mouseleave", () => {
+        hoverContainer.style.opacity = "0";
+      });
+    });
+  }
+
+  initProjectsPreview();
+  document.addEventListener("astro:after-swap", initProjectsPreview);
+</script>
