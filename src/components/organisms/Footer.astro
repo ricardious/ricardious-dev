@@ -20,47 +20,43 @@ const {
   <div
     class="mx-auto w-full flex flex-col items-center pb-[15vh] max-md:pb-[12vh]"
   >
-    <Headline name="work together" />
+    <Headline name="trabajemos juntos" />
 
     <div
       class="w-full h-[60vh] flex items-center justify-center flex-wrap flex-col"
     >
       <a
         href={`mailto:${email}`}
-        class="font-serif text-[14vw] leading-[0.9] uppercase max-md:text-[18vw]"
+        class="font-heading text-text-standard text-[14vw] leading-[0.9] uppercase max-md:text-[18vw]"
       >
-        Drop me
+        Envíame
       </a>
       <div
-        class="font-serif text-[14vw] leading-[0.9] uppercase max-md:text-[18vw]"
+        class="flex items-baseline flex-nowrap font-heading text-text-standard text-[14vw] leading-[0.9] uppercase max-md:text-[18vw]"
       >
-        <span>
-          an
-          <br />
+        <span>un</span>
+        <span
+          class="important-word relative overflow-hidden inline-block px-2.5"
+        >
           <span
-            class="important-word relative overflow-hidden inline-block px-2.5"
+            class="word relative inline-block ml-[6%] text-primary transition-transform duration-300 ease-in-out hover:-translate-y-full"
           >
-            <span
-              class="word relative inline-block ml-[6%] text-primary transition-transform duration-300 ease-in-out hover:-translate-y-full"
+            <span>email</span>
+            <a
+              href={`mailto:${email}`}
+              class="absolute left-0 top-full text-primary"
             >
-              <span>email</span>
-              <a
-                href={`mailto:${email}`}
-                class="absolute left-0 top-full text-primary"
-              >
-                email
-              </a>
-            </span>
+              email
+            </a>
           </span>
         </span>
       </div>
     </div>
 
-    <div class="w-full h-px bg-text-disabled2 transition-colors duration-600">
-    </div>
+    <div class="separator"></div>
 
     <div
-      class="text-[10px] mt-5 w-full flex flex-row items-center justify-between"
+      class="text-[10px] -mt-5 w-full flex flex-row items-center justify-between"
     >
       <div class="text-link max-md:hidden">@2026</div>
       <ul
