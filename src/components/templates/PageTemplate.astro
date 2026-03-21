@@ -4,14 +4,36 @@ import Footer from "@organisms/Footer.astro";
 interface Props {
   hasFooter?: boolean;
   hasTransitionPanel?: boolean;
+  smoothScroll?: boolean;
 }
 
-const { hasFooter = true, hasTransitionPanel = false } = Astro.props;
+const {
+  hasFooter = true,
+  hasTransitionPanel = false,
+  smoothScroll = false,
+} = Astro.props;
 ---
 
-<div class="w-full">
-  <slot />
-  {hasFooter && <Footer />}
+<div class="w-full" data-page-template>
+  <div
+    class:list={["w-full", smoothScroll && "smooth-scroll-root"]}
+    data-smooth-scroll-root={smoothScroll ? "true" : undefined}
+  >
+    <div
+      class:list={smoothScroll && "smooth-scroll-inner"}
+      data-smooth-scroll-inner={smoothScroll ? "true" : undefined}
+    >
+      <slot />
+      {hasFooter && <Footer />}
+    </div>
+  </div>
+  {smoothScroll && (
+    <div
+      class="smooth-scroll-spacer hidden"
+      data-smooth-scroll-spacer
+      aria-hidden="true"
+    ></div>
+  )}
 </div>
 
 <style>
@@ -23,6 +45,105 @@ const { hasFooter = true, hasTransitionPanel = false } = Astro.props;
     window.scrollTo(0, 0);
   }
 
+  function initSmoothScrollPages() {
+    const roots = document.querySelectorAll<HTMLElement>("[data-smooth-scroll-root]");
+
+    for (const root of roots) {
+      const inner = root.querySelector<HTMLElement>("[data-smooth-scroll-inner]");
+      const spacer = root.parentElement?.querySelector<HTMLElement>(
+        "[data-smooth-scroll-spacer]",
+      );
+
+      if (!inner || !spacer) continue;
+
+      root.dataset.smoothScrollInitialized = "true";
+
+      const previousDestroy = (root as HTMLElement & {
+        __smoothScrollDestroy?: () => void;
+      }).__smoothScrollDestroy;
+      previousDestroy?.();
+
+      let currentY = 0;
+      let targetY = 0;
+      let rafId = 0;
+      let resizeObserver: ResizeObserver | null = null;
+      const desktopQuery = window.matchMedia("(min-width: 770px)");
+
+      const syncHeight = () => {
+        spacer.style.height = `${inner.offsetHeight}px`;
+      };
+
+      const applyMode = () => {
+        if (!desktopQuery.matches) {
+          cancelAnimationFrame(rafId);
+          root.style.position = "";
+          root.style.inset = "";
+          root.style.width = "";
+          root.style.overflow = "";
+          root.style.willChange = "";
+          inner.style.transform = "";
+          spacer.classList.add("hidden");
+          spacer.style.height = "";
+          return;
+        }
+
+        root.style.position = "fixed";
+        root.style.inset = "0";
+        root.style.width = "100%";
+        root.style.overflow = "hidden";
+        root.style.willChange = "transform";
+        spacer.classList.remove("hidden");
+        syncHeight();
+
+        const tick = () => {
+          targetY = window.scrollY;
+          currentY += (targetY - currentY) * 0.1;
+
+          if (Math.abs(targetY - currentY) < 0.1) {
+            currentY = targetY;
+          }
+
+          inner.style.transform = `translate3d(0, ${-currentY}px, 0)`;
+          rafId = window.requestAnimationFrame(tick);
+        };
+
+        cancelAnimationFrame(rafId);
+        tick();
+      };
+
+      resizeObserver = new ResizeObserver(syncHeight);
+      resizeObserver.observe(inner);
+
+      applyMode();
+
+      const handleResize = () => {
+        syncHeight();
+        applyMode();
+      };
+
+      desktopQuery.addEventListener("change", handleResize);
+      window.addEventListener("resize", handleResize);
+
+      (root as HTMLElement & { __smoothScrollDestroy?: () => void }).__smoothScrollDestroy =
+        () => {
+          cancelAnimationFrame(rafId);
+          resizeObserver?.disconnect();
+          desktopQuery.removeEventListener("change", handleResize);
+          window.removeEventListener("resize", handleResize);
+          root.style.position = "";
+          root.style.inset = "";
+          root.style.width = "";
+          root.style.overflow = "";
+          root.style.willChange = "";
+          inner.style.transform = "";
+          spacer.style.height = "";
+          spacer.classList.add("hidden");
+        };
+    }
+  }
+
   resetScroll();
+  initSmoothScrollPages();
   document.addEventListener("astro:after-swap", resetScroll);
+  document.addEventListener("astro:after-swap", initSmoothScrollPages);
 </script>
