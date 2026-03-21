@@ -1,7 +1,7 @@
 <svg viewBox="0 0 635 730" xmlns="http://www.w3.org/2000/svg">
    <style>
       path {
-         fill: #000;
+         fill: none;
          stroke: #fff;
          stroke-width: 21.17;
          stroke-linecap: round;
@@ -10,7 +10,7 @@
 
       @media (prefers-color-scheme:dark) {
          path {
-            fill: #fff;
+            fill: none;
             stroke: #000
          }
       }
@@ -18,7 +18,6 @@
    <path d="m624 188-79 45v139l-108 62 108 62v91l79-45zM197 434l241-139-121-70-120 70Z" />
    <path d="M317 11 11 188l78 45 229-132 228 132 79-45z" />
    <path d="M89 587V233l-78-45v354zm336 70-79-45-149-87v124l120 70 79-45z" />
-   <path d="M197 525V295l120-70 121 70-241 139 120 70 108 62 121-70-108-62 108-62V233L317 101 89 233v354l79-45z"
-      style="fill:none" />
+   <path d="M197 525V295l120-70 121 70-241 139 120 70 108 62 121-70-108-62 108-62V233L317 101 89 233v354l79-45z" />
    <path d="M425 657v-91l-108-62-120-70v91l149 86zm121-70v-91l-121 70v91z" />
 </svg>

@@ -5,8 +5,7 @@ export type IconName =
   | "discover-arrow"
   | "arrow-right"
   | "envelope-closed"
-  | "github-logo"
-  | "logo";
+  | "github-logo";
 
 interface IconProps extends SVGProps<SVGSVGElement> {
   name: IconName;

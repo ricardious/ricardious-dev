@@ -1,5 +1,6 @@
 ---
 import Icon from "@atoms/Icon.astro";
+import LogoMark from "@atoms/LogoMark.astro";
 import NavLink from "@atoms/NavLink.astro";
 
 interface Props {
@@ -19,7 +20,7 @@ const {
   class="padding-global fixed z-100 flex w-screen items-start justify-between mix-blend-difference"
 >
   <a href="/" class="flex items-center gap-3 text-h6 text-white">
-    <Icon name="logo" class="size-8" />
+    <LogoMark class="size-8" />
     <div>
       <span class="name">{name}</span>
       <br />
