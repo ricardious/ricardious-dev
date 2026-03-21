@@ -23,6 +23,41 @@ const { title, description = "Ricardious Portfolio" } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <script is:inline>
+      (() => {
+        const STORAGE_KEY = "theme";
+        const root = document.documentElement;
+
+        const getTheme = () => {
+          const storedTheme = localStorage.getItem(STORAGE_KEY);
+          return storedTheme === "light" || storedTheme === "dark" || storedTheme === "system"
+            ? storedTheme
+            : "system";
+        };
+
+        const applyTheme = (theme) => {
+          root.classList.remove("light", "dark", "system");
+          root.classList.add(theme);
+        };
+
+        const setTheme = (theme) => {
+          localStorage.setItem(STORAGE_KEY, theme);
+          applyTheme(theme);
+        };
+
+        const toggleTheme = () => {
+          const isDark =
+            root.classList.contains("dark") ||
+            (root.classList.contains("system") &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+          setTheme(isDark ? "light" : "dark");
+        };
+
+        applyTheme(getTheme());
+        window.__theme = { getTheme, setTheme, toggleTheme };
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />

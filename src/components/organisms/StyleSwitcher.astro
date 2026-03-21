@@ -19,21 +19,16 @@ import NavLink from "@atoms/NavLink.astro";
 
 <script>
   function initThemeToggle() {
-    const themeToggle = document.getElementById("theme-toggle");
+    const themeToggle = document.getElementById("theme-toggle") as HTMLButtonElement | null;
     const html = document.documentElement;
 
     const switchTheme = () => {
-      const isDark =
-        html.classList.contains("dark") ||
-        (html.classList.contains("system") &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches);
-      const newTheme = isDark ? "light" : "dark";
-      html.classList.remove("light", "dark", "system");
-      html.classList.add(newTheme);
-      localStorage.setItem("theme", newTheme);
+      window.__theme?.toggleTheme();
     };
 
-    themeToggle?.addEventListener("click", () => {
+    if (!themeToggle) return;
+
+    themeToggle.onclick = () => {
       if (!document.startViewTransition) {
         switchTheme();
         return;
@@ -43,7 +38,7 @@ import NavLink from "@atoms/NavLink.astro";
       transition.finished.finally(() => {
         html.classList.remove("theme-transitioning");
       });
-    });
+    };
   }
 
   // Run on initial load
