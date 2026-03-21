@@ -11,7 +11,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [react()],
-  experimental: {
-    svgo: true,
-  },
+
 });
