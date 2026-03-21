@@ -1,0 +1,35 @@
+---
+type IconName =
+  | "arrow-down"
+  | "arrow-right"
+  | "envelope-closed"
+  | "github-logo"
+  | "logo";
+
+interface Props {
+  name: IconName;
+  class?: string;
+  size?: string | number;
+  title?: string;
+}
+
+const {
+  name,
+  class: className = "",
+  size,
+  title,
+  ...props
+} = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  aria-hidden={title ? undefined : "true"}
+  role={title ? "img" : undefined}
+  {...props}
+>
+  {title && <title>{title}</title>}
+  <use href={`/icons/sprite.svg#${name}`}></use>
+</svg>

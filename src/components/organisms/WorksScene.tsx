@@ -1,5 +1,5 @@
-import arrowRight from "@assets/icons/arrow-right.svg";
 import DistortionMaterial from "@atoms/DistortionMaterial";
+import Icon from "@atoms/Icon";
 import { useCursorStore } from "@lib/store/cursor";
 import { Html, useProgress, useTexture } from "@react-three/drei";
 import {
@@ -209,10 +209,9 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
               open project
             </span>
             <div className="ml-2.5 w-5 h-5 rounded-full bg-white flex items-center justify-center">
-              <img
-                src={arrowRight.src}
-                alt=""
-                className="w-[60%] h-[60%] opacity-60"
+              <Icon
+                name="arrow-right"
+                className="w-[60%] h-[60%] opacity-60 text-black"
               />
             </div>
           </div>
