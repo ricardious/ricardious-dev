@@ -14,6 +14,7 @@ const {
   location = "Guatemala, GT",
   email = "castaneda.systems@gmail.com",
 } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <header
@@ -29,7 +30,9 @@ const {
   </a>
 
   <nav class="flex items-center gap-6 max-md:gap-5">
-    <NavLink href="/about">[ ABOUT ]</NavLink>
+    <NavLink href="/about" isActive={currentPath === "/" || currentPath === "/about"}>
+      [ ABOUT ]
+    </NavLink>
     <a
       href={`mailto:${email}`}
       class="text-white/40 transition-colors hover:text-white"

@@ -1,11 +1,157 @@
 ---
+import FullImage from "@atoms/FullImage.astro";
+import Headline from "@atoms/Headline.astro";
+import Icon from "@atoms/Icon.astro";
+import ImageSlider from "@atoms/ImageSlider.astro";
+import TextSpawn from "@atoms/TextSpawn.astro";
 import Layout from "@layouts/Layout.astro";
-import WorksScene from "@organisms/WorksScene";
+import ProjectsPreview from "@molecules/ProjectsPreview.astro";
 import PageTemplate from "@templates/PageTemplate.astro";
+
+const fullImageSrc = "https://picsum.photos/id/1035/1920/1080";
 ---
 
-<Layout title="Ricardious | Works">
-  <PageTemplate hasFooter={false}>
-    <WorksScene client:only="react" />
+<Layout title="Ricardious | About">
+  <PageTemplate hasTransitionPanel={true} smoothScroll={true}>
+    <section
+      class="hero relative flex h-screen w-screen items-center justify-center pb-[5vh] max-[900px]:margin-page max-[700px]:p-0"
+    >
+      <div class="relative flex flex-col flex-wrap">
+        <div
+          class="line flex h-auto w-auto items-center gap-[2vw] whitespace-nowrap font-heading text-[clamp(2rem,11vw,20rem)] uppercase leading-[0.8] text-text-standard max-sm:flex-col max-sm:gap-4 max-sm:whitespace-normal max-sm:text-[14vw]"
+        >
+          <TextSpawn>Diseñador</TextSpawn>
+          <div
+            class="flex w-[15vw] flex-col gap-2 text-start max-sm:mb-4 max-sm:w-[50vw]"
+          >
+            <ImageSlider />
+          </div>
+        </div>
+        <div
+          class="line flex h-auto w-auto items-center gap-[2vw] whitespace-nowrap pl-16 font-heading text-[clamp(2rem,11vw,20rem)] uppercase leading-[0.8] text-text-standard max-sm:flex-col max-sm:gap-4 max-sm:whitespace-normal max-sm:pl-0 max-sm:text-[14vw]"
+        >
+          <TextSpawn direction="LEFT">& Desarrollador</TextSpawn>
+        </div>
+      </div>
+
+      <div
+        class="discover absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center text-text"
+      >
+        <span class="font-body text-[10px] uppercase text-text">descubre</span>
+        <Icon name="discover-arrow" class="mb-0.5 text-text" />
+      </div>
+    </section>
+
+    <section
+      data-bio-section
+      class="bio-section margin-page flex w-screen flex-col flex-nowrap items-center"
+    >
+      <div data-bio-headline class="bio-layer">
+        <Headline name="Biografía" />
+      </div>
+      <div data-bio-text class="bio-layer text-centered">
+        Soy Alex Ricardo Castañeda Rodríguez, diseñador y desarrollador
+        front-end dedicado a crear experiencias digitales únicas para marcas,
+        startups y la web.
+        <br /><br />
+        Me apasiona el desarrollo creativo, combino branding y diseño web para crear
+        identidades modernas y con propósito. Me guío por el minimalismo y la atención
+        al detalle para diseñar experiencias que dan vida a la visión de cada marca
+        con claridad y elegancia.
+      </div>
+      <a
+        data-bio-cta
+        class="bio-layer button big"
+        href="https://github.com/ricardious"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+    </section>
+
+    <div class="spacer"></div>
+
+    <section class="margin-page flex w-screen flex-col items-center">
+      <div class="separator"></div>
+      <ProjectsPreview />
+    </section>
+
+    <div class="spacer"></div>
+
+    <FullImage src={fullImageSrc} alt="moodboard" />
   </PageTemplate>
 </Layout>
+
+<script>
+  function initDiscoverFade() {
+    const discover = document.querySelector(".discover") as HTMLElement | null;
+    if (!discover) return;
+
+    const onScroll = () => {
+      const opacity = Math.max(0, 1 - window.scrollY / 300);
+      discover.style.opacity = String(opacity);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  function initBiographySlide() {
+    const section = document.querySelector<HTMLElement>("[data-bio-section]");
+    const headline = document.querySelector<HTMLElement>("[data-bio-headline]");
+    const text = document.querySelector<HTMLElement>("[data-bio-text]");
+    const cta = document.querySelector<HTMLElement>("[data-bio-cta]");
+
+    if (!section || !headline || !text || !cta) return;
+
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(max, Math.max(min, value));
+
+    const onScroll = () => {
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const progress = clamp(
+        (viewportHeight - rect.top) / (viewportHeight * 0.95),
+        0,
+        1,
+      );
+      const eased = 1 - (1 - progress) ** 3;
+
+      headline.style.transform = `translate3d(0, ${(1 - eased) * 90}px, 0)`;
+      text.style.transform = `translate3d(0, ${(1 - eased) * 130}px, 0)`;
+      cta.style.transform = `translate3d(0, ${(1 - eased) * 170}px, 0)`;
+
+      headline.style.opacity = String(eased);
+      text.style.opacity = String(clamp(eased * 1.05, 0, 1));
+      cta.style.opacity = String(clamp((eased - 0.1) * 1.2, 0, 1));
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  initDiscoverFade();
+  initBiographySlide();
+  document.addEventListener("astro:after-swap", initDiscoverFade);
+  document.addEventListener("astro:after-swap", initBiographySlide);
+</script>
+
+<style>
+  .bio-layer {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    transition:
+      opacity 220ms linear,
+      transform 220ms linear;
+    will-change: transform, opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bio-layer {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

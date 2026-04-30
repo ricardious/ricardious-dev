@@ -3,11 +3,17 @@ interface Props {
   href: string;
   class?: string;
   isActive?: boolean;
+  autoActive?: boolean;
 }
 
-const { href, class: className, isActive = false } = Astro.props;
+const {
+  href,
+  class: className,
+  isActive = false,
+  autoActive = true,
+} = Astro.props;
 const currentPath = Astro.url.pathname;
-const active = isActive || currentPath === href;
+const active = isActive || (autoActive && currentPath === href);
 ---
 
 <a
