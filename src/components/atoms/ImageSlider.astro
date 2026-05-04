@@ -26,7 +26,7 @@ const images = projects.map((p) => p.coverImgSmall);
 <script define:vars={{ images }}>
   function initSlider() {
     const container = document.querySelector(".img-slider");
-    if (!container) return;
+    if (!container || images.length < 2) return;
 
     const img = container.querySelector(".slider-img");
     const overlay = container.querySelector(".slider-overlay");

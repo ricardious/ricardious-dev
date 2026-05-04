@@ -67,6 +67,9 @@ const planePositions = {
   desktop: { distanceX: 0.16, distanceY: 1.18 },
 };
 
+const projectCount = projects.length;
+const maxProjectIndex = Math.max(projectCount - 1, 0);
+
 // Simple lerp function (frame-independent when delta is provided)
 const lerp = (start: number, end: number, factor: number, delta = 1) => {
   const t = 1 - (1 - factor) ** (delta * 60);
@@ -163,10 +166,15 @@ function ShaderPlane({ index, texture, project, isInView }: ShaderPlaneProps) {
   const clickHandler = () => {
     if (!scrollArea.current) return;
 
+    if (maxProjectIndex === 0) {
+      window.location.href = `/works/${project.path}`;
+      return;
+    }
+
     scrollArea.current.scrollTop =
       index *
       ((scrollArea.current.children[0].clientHeight - window.innerHeight) /
-        (projects.length - 1));
+        maxProjectIndex);
 
     setTimeout(() => {
       window.location.href = `/works/${project.path}`;
@@ -256,7 +264,7 @@ function Scene() {
       0,
       1,
       0,
-      projects.length - 1,
+      maxProjectIndex,
       scrollArea.current.scrollTop / scrollHeight,
     );
 
@@ -377,7 +385,7 @@ export default function WorksScene() {
       >
         <div
           style={{
-            height: `${(projects.length - 1) * PROJECT_HEIGHT}vh`,
+            height: `${Math.max(maxProjectIndex * PROJECT_HEIGHT, 100)}vh`,
             width: "100vw",
           }}
         />

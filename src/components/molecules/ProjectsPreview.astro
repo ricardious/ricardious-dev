@@ -6,6 +6,7 @@
 import projects from "@lib/constants/projects";
 
 const previewProjects = projects.slice(0, 4);
+const hasMoreProjects = projects.length > previewProjects.length;
 ---
 
 <div class="projects-preview w-full">
@@ -28,21 +29,24 @@ const previewProjects = projects.slice(0, 4);
     ))
   }
 
-  <!-- More projects link -->
-  <div class="project-item w-full">
-    <a
-      href="/"
-      class="flex items-start transition-transform duration-300 ease-out hover:translate-x-4"
-    >
-      <span class="text-[12px] text-text mt-1.5 max-md:mt-1">(XX)</span>
-      <span
-        class="ml-7 font-heading uppercase text-h1 max-md:ml-6.5 max-sm:ml-4.5"
-      >
-        more projects
-      </span>
-    </a>
-    <div class="separator"></div>
-  </div>
+  {
+    hasMoreProjects && (
+      <div class="project-item w-full">
+        <a
+          href="/works"
+          class="flex items-start transition-transform duration-300 ease-out hover:translate-x-4"
+        >
+          <span class="text-[12px] text-text mt-1.5 max-md:mt-1">(XX)</span>
+          <span
+            class="ml-7 font-heading uppercase text-h1 max-md:ml-6.5 max-sm:ml-4.5"
+          >
+            more projects
+          </span>
+        </a>
+        <div class="separator"></div>
+      </div>
+    )
+  }
 
   <!-- Hover image follower (desktop only) -->
   <div
