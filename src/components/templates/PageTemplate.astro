@@ -20,7 +20,7 @@ const {
     data-smooth-scroll-root={smoothScroll ? "true" : undefined}
   >
     <div
-      class:list={smoothScroll && "smooth-scroll-inner"}
+      class:list={smoothScroll ? "smooth-scroll-inner" : undefined}
       data-smooth-scroll-inner={smoothScroll ? "true" : undefined}
     >
       <slot />
