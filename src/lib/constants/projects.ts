@@ -11,6 +11,13 @@ import dashboardSchedule from "@/assets/projects/semestrix/dashboard-schedule.we
 import dashboardProfile from "@/assets/projects/semestrix/dashboard-profile.webp";
 import dashboardSettings from "@/assets/projects/semestrix/dashboard-settings.webp";
 import dashboardOverview from "@/assets/projects/semestrix/dashboard-overview.webp";
+import physicsDeviceMockup from "@/assets/projects/physics-lab-portal/device-mockup.png";
+import physicsLandingOverview from "@/assets/projects/physics-lab-portal/landing-overview.png";
+import physicsScreen1 from "@/assets/projects/physics-lab-portal/screen-1.png";
+import physicsScreen2 from "@/assets/projects/physics-lab-portal/screen-2.png";
+import physicsScreen3 from "@/assets/projects/physics-lab-portal/screen-3.png";
+import physicsFullPage1 from "@/assets/projects/physics-lab-portal/full-page-1.png";
+import physicsFullPage2 from "@/assets/projects/physics-lab-portal/full-page-2.png";
 
 interface ProjectSection {
   eyebrow: string;
@@ -172,6 +179,106 @@ const projectsData: Omit<Project, "id" | "index">[] = [
       {
         src: dashboardOverview.src,
         alt: "Semestrix dashboard overview",
+      },
+    ],
+  },
+  {
+    name: "Physics Lab Portal",
+    path: "physics-lab-portal",
+    title: "Portal de Laboratorios de Fisica",
+    coverImg: physicsDeviceMockup.src,
+    coverImgSmall: physicsDeviceMockup.src,
+    visual1: physicsLandingOverview.src,
+    date: "2025",
+    role: "Product Design, Frontend Development",
+    techs: ["Astro 6", "React 19", "Tailwind CSS 4", "GitHub Pages"],
+    websiteLink: "https://ricardious.github.io/physics-lab-portal/",
+    description:
+      "Portal academico para centralizar manuales, documentos y herramientas de los laboratorios de Fisica de la Facultad de Ingenieria con una experiencia mucho mas clara y util.",
+    overview:
+      "Physics Lab Portal reorganiza recursos academicos dispersos en una interfaz estatica, rapida y facil de navegar. El proyecto replantea la arquitectura de contenido del sitio actual para que estudiantes y docentes encuentren practicas, programas, plantillas y software sin friccion.",
+    highlights: [
+      "Rediseño enfocado en IA de contenido y acceso rapido a recursos recurrentes del laboratorio.",
+      "Experiencia pensada para funcionar incluso sin JavaScript, manteniendo acceso a documentos y descargas.",
+      "Jerarquia visual oscura y tecnica alineada con el contexto academico y el tipo de material consultado.",
+      "Despliegue estatico en GitHub Pages con stack ligero y mantenimiento simple.",
+    ],
+    sections: [
+      {
+        eyebrow: "Problema",
+        title: "Convertir un repositorio de recursos en una experiencia util",
+        body: [
+          "El reto principal no era solo modernizar la interfaz, sino ordenar informacion academica extensa sin perder acceso directo a archivos, manuales y utilidades que los estudiantes necesitan durante el semestre.",
+          "La solucion parte de una arquitectura clara por categorias y de bloques destacados que reducen el tiempo de busqueda sin convertir el sitio en una navegacion pesada.",
+        ],
+      },
+      {
+        eyebrow: "Sistema",
+        title: "Contenido, navegacion y consulta rapida como un solo flujo",
+        body: [
+          "El portal agrupa herramientas, documentos academicos y manuales por tipo de recurso, pero tambien conserva relaciones practicas entre software, plantillas, programas y material por curso.",
+          "Eso permite que la pagina funcione como indice, centro de consulta y punto de descarga dentro de la misma experiencia.",
+        ],
+      },
+      {
+        eyebrow: "Implementacion",
+        title: "Un sitio estatico ligero con soporte progresivo",
+        body: [
+          "La implementacion con Astro, React y Tailwind prioriza tiempos de carga bajos, mantenimiento sencillo y despliegue continuo en GitHub Pages.",
+          "El resultado es un producto academico sobrio, accesible y suficientemente flexible para crecer con nuevos documentos y recursos institucionales.",
+        ],
+      },
+    ],
+    toolGroups: [
+      {
+        label: "Frontend",
+        items: ["Astro 6", "React 19", "TypeScript", "Tailwind CSS 4"],
+      },
+      {
+        label: "Producto",
+        items: [
+          "Arquitectura de informacion",
+          "UX para recursos academicos",
+          "Priorizacion por categorias",
+          "Acceso progresivo sin JavaScript",
+        ],
+      },
+      {
+        label: "Alcance",
+        items: [
+          "Herramientas y software tecnico",
+          "Documentos y plantillas",
+          "Manuales y programas por curso",
+          "Despliegue estatico en GitHub Pages",
+        ],
+      },
+    ],
+    gallery: [
+      {
+        src: physicsLandingOverview.src,
+        alt: "Vista general del portal de laboratorios de fisica",
+      },
+      {
+        src: physicsScreen1.src,
+        alt: "Hero y resumen principal del Physics Lab Portal",
+      },
+      {
+        src: physicsScreen2.src,
+        alt: "Secciones de recursos y herramientas destacadas del portal",
+      },
+      {
+        src: physicsScreen3.src,
+        alt: "Vista extendida del portal con documentos y manuales",
+      },
+      {
+        src: physicsFullPage1.src,
+        alt: "Recorrido completo de la pagina principal del Physics Lab Portal",
+        wide: true,
+      },
+      {
+        src: physicsFullPage2.src,
+        alt: "Captura adicional de pagina completa del Physics Lab Portal",
+        wide: true,
       },
     ],
   },
