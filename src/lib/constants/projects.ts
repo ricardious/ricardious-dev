@@ -11,13 +11,9 @@ import dashboardSchedule from "@/assets/projects/semestrix/dashboard-schedule.we
 import dashboardProfile from "@/assets/projects/semestrix/dashboard-profile.webp";
 import dashboardSettings from "@/assets/projects/semestrix/dashboard-settings.webp";
 import dashboardOverview from "@/assets/projects/semestrix/dashboard-overview.webp";
-import physicsDeviceMockup from "@/assets/projects/physics-lab-portal/device-mockup.png";
-import physicsLandingOverview from "@/assets/projects/physics-lab-portal/landing-overview.png";
-import physicsScreen1 from "@/assets/projects/physics-lab-portal/screen-1.png";
-import physicsScreen2 from "@/assets/projects/physics-lab-portal/screen-2.png";
-import physicsScreen3 from "@/assets/projects/physics-lab-portal/screen-3.png";
-import physicsFullPage1 from "@/assets/projects/physics-lab-portal/full-page-1.png";
-import physicsFullPage2 from "@/assets/projects/physics-lab-portal/full-page-2.png";
+import physicsDeviceMockup from "@/assets/projects/physics-lab-portal/device-mockup.webp";
+import physicsFullPage from "@/assets/projects/physics-lab-portal/full-page.webp";
+import physicsLaptopMockup from "@/assets/projects/physics-lab-portal/laptop-mockup.webp";
 
 interface ProjectSection {
   eyebrow: string;
@@ -186,9 +182,9 @@ const projectsData: Omit<Project, "id" | "index">[] = [
     name: "Physics Lab Portal",
     path: "physics-lab-portal",
     title: "Portal de Laboratorios de Fisica",
-    coverImg: physicsDeviceMockup.src,
-    coverImgSmall: physicsDeviceMockup.src,
-    visual1: physicsLandingOverview.src,
+    coverImg: physicsLaptopMockup.src,
+    coverImgSmall: physicsLaptopMockup.src,
+    visual1: physicsDeviceMockup.src,
     date: "2025",
     role: "Product Design, Frontend Development",
     techs: ["Astro 6", "React 19", "Tailwind CSS 4", "GitHub Pages"],
@@ -198,7 +194,7 @@ const projectsData: Omit<Project, "id" | "index">[] = [
     overview:
       "Physics Lab Portal reorganiza recursos academicos dispersos en una interfaz estatica, rapida y facil de navegar. El proyecto replantea la arquitectura de contenido del sitio actual para que estudiantes y docentes encuentren practicas, programas, plantillas y software sin friccion.",
     highlights: [
-      "Rediseño enfocado en IA de contenido y acceso rapido a recursos recurrentes del laboratorio.",
+      "Rediseño enfocado en la organizacion de contenido y acceso rapido a recursos recurrentes del laboratorio.",
       "Experiencia pensada para funcionar incluso sin JavaScript, manteniendo acceso a documentos y descargas.",
       "Jerarquia visual oscura y tecnica alineada con el contexto academico y el tipo de material consultado.",
       "Despliegue estatico en GitHub Pages con stack ligero y mantenimiento simple.",
@@ -255,28 +251,7 @@ const projectsData: Omit<Project, "id" | "index">[] = [
     ],
     gallery: [
       {
-        src: physicsLandingOverview.src,
-        alt: "Vista general del portal de laboratorios de fisica",
-      },
-      {
-        src: physicsScreen1.src,
-        alt: "Hero y resumen principal del Physics Lab Portal",
-      },
-      {
-        src: physicsScreen2.src,
-        alt: "Secciones de recursos y herramientas destacadas del portal",
-      },
-      {
-        src: physicsScreen3.src,
-        alt: "Vista extendida del portal con documentos y manuales",
-      },
-      {
-        src: physicsFullPage1.src,
-        alt: "Recorrido completo de la pagina principal del Physics Lab Portal",
-        wide: true,
-      },
-      {
-        src: physicsFullPage2.src,
+        src: physicsFullPage.src,
         alt: "Captura adicional de pagina completa del Physics Lab Portal",
         wide: true,
       },
