@@ -30,7 +30,9 @@ const { title, description = "Ricardious Portfolio" } = Astro.props;
 
         const getTheme = () => {
           const storedTheme = localStorage.getItem(STORAGE_KEY);
-          return storedTheme === "light" || storedTheme === "dark" || storedTheme === "system"
+          return storedTheme === "light" ||
+            storedTheme === "dark" ||
+            storedTheme === "system"
             ? storedTheme
             : "system";
         };
