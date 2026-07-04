@@ -37,13 +37,11 @@ const hasMoreProjects = projects.length > previewProjects.length;
           class="flex items-start transition-transform duration-300 ease-out hover:translate-x-4"
         >
           <span class="text-[12px] text-text mt-1.5 max-md:mt-1">(XX)</span>
-          <span
-            class="ml-7 font-heading uppercase text-h1 max-md:ml-6.5 max-sm:ml-4.5"
-          >
-            more projects
+          <span class="ml-7 font-heading uppercase text-h1 max-md:ml-6.5 max-sm:ml-4.5">
+            más proyectos
           </span>
         </a>
-        <div class="separator"></div>
+        <div class="separator" />
       </div>
     )
   }
@@ -82,7 +80,9 @@ const hasMoreProjects = projects.length > previewProjects.length;
     ).__projectsPreviewCleanup;
     previousCleanup?.();
 
-    const items = previewRoot.querySelectorAll<HTMLElement>(".project-item[data-cover]");
+    const items = previewRoot.querySelectorAll<HTMLElement>(
+      ".project-item[data-cover]",
+    );
     const cleanups: Array<() => void> = [];
     let rafId = 0;
     let currentScrollY = window.scrollY;
@@ -121,8 +121,12 @@ const hasMoreProjects = projects.length > previewProjects.length;
 
     tick();
 
-    cleanups.push(() => window.removeEventListener("mousemove", updatePosition));
-    cleanups.push(() => window.removeEventListener("mouseleave", onWindowLeave));
+    cleanups.push(() =>
+      window.removeEventListener("mousemove", updatePosition),
+    );
+    cleanups.push(() =>
+      window.removeEventListener("mouseleave", onWindowLeave),
+    );
     cleanups.push(() => window.removeEventListener("scroll", onScroll));
     cleanups.push(() => window.cancelAnimationFrame(rafId));
 

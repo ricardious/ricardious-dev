@@ -31,12 +31,12 @@ const currentPath = Astro.url.pathname;
 
   <nav class="flex items-center gap-6 max-md:gap-5">
     <NavLink href="/about" isActive={currentPath === "/" || currentPath === "/about"}>
-      [ ABOUT ]
+      [ SOBRE MÍ ]
     </NavLink>
     <a
       href={`mailto:${email}`}
       class="text-white/40 transition-colors hover:text-white"
-      aria-label="Send email"
+      aria-label="Enviar correo"
     >
       <Icon name="envelope-closed" class="block size-4" />
     </a>

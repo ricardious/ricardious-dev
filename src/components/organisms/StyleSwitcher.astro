@@ -7,14 +7,14 @@ import NavLink from "@atoms/NavLink.astro";
 >
   <nav class="pointer-events-auto flex gap-6 max-md:gap-5">
     <NavLink href="/works" isActive={Astro.url.pathname.startsWith("/works")}>
-      [ WORKS ]
+      [ PROYECTOS ]
     </NavLink>
-    <NavLink href="/random">[ RANDOM ]</NavLink>
+    <NavLink href="/random">[ EXPERIMENTOS ]</NavLink>
   </nav>
   <button
     id="theme-toggle"
     class="absolute right-[2.5vw] pointer-events-auto size-4.5 rounded-full bg-white border-none transition-colors duration-400 cursor-pointer max-md:right-[4vw]"
-    aria-label="Toggle theme"
+    aria-label="Alternar tema"
   >
   </button>
 </footer>
