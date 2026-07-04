@@ -17,7 +17,7 @@ const { title, description = "Ricardious Portfolio" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="system">
+<html lang="es" class="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -37,9 +37,9 @@ const { title, description = "Ricardious Portfolio" } = Astro.props;
             : "system";
         };
 
-        const applyTheme = (theme) => {
-          root.classList.remove("light", "dark", "system");
-          root.classList.add(theme);
+        const applyTheme = (theme, targetRoot = document.documentElement) => {
+          targetRoot.classList.remove("light", "dark", "system");
+          targetRoot.classList.add(theme);
         };
 
         const setTheme = (theme) => {
@@ -56,8 +56,16 @@ const { title, description = "Ricardious Portfolio" } = Astro.props;
           setTheme(isDark ? "light" : "dark");
         };
 
-        applyTheme(getTheme());
+        applyTheme(getTheme(), root);
         window.__theme = { getTheme, setTheme, toggleTheme };
+
+        document.addEventListener("astro:before-swap", (event) => {
+          applyTheme(getTheme(), event.newDocument.documentElement);
+        });
+
+        document.addEventListener("astro:after-swap", () => {
+          applyTheme(getTheme());
+        });
       })();
     </script>
     <title>{title}</title>
