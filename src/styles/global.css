@@ -59,13 +59,25 @@
 	}
 
 	@keyframes delayHide {
-		0%, 50% { opacity: 1; }
-		50.1%, 100% { opacity: 0; }
+		0%,
+		50% {
+			opacity: 1;
+		}
+		50.1%,
+		100% {
+			opacity: 0;
+		}
 	}
 
 	@keyframes delayShow {
-		0%, 50% { opacity: 0; }
-		50.1%, 100% { opacity: 1; }
+		0%,
+		50% {
+			opacity: 0;
+		}
+		50.1%,
+		100% {
+			opacity: 1;
+		}
 	}
 
 	html:not(.theme-transitioning)::view-transition-image-pair(root)::after {
@@ -78,8 +90,15 @@
 	}
 
 	@keyframes panelWipe {
-		0% { transform: translateY(100%); }
-		45%, 55% { transform: translateY(0%); }
-		100% { transform: translateY(-100%); }
+		0% {
+			transform: translateY(100%);
+		}
+		45%,
+		55% {
+			transform: translateY(0%);
+		}
+		100% {
+			transform: translateY(-100%);
+		}
 	}
 }

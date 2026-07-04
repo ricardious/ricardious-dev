@@ -1,18 +1,18 @@
-import { shaderMaterial } from "@react-three/drei";
-import { noiseFunction } from "@/lib/helpers/glsl";
+import { shaderMaterial } from '@react-three/drei';
+import { noiseFunction } from '@/lib/helpers/glsl';
 
 const DistortionMaterial = shaderMaterial(
-  {
-    time: 0,
-    tex: null,
-    speed: 0,
-    rgbShiftStrength: 1,
-    hoverValue: 0,
-    textureAspect: 1,
-    frameAspect: 1,
-  },
-  // vertex shader
-  `
+	{
+		time: 0,
+		tex: null,
+		speed: 0,
+		rgbShiftStrength: 1,
+		hoverValue: 0,
+		textureAspect: 1,
+		frameAspect: 1,
+	},
+	// vertex shader
+	`
     uniform float time;
     uniform float hoverValue;
     varying vec2 vUv;
@@ -30,8 +30,8 @@ const DistortionMaterial = shaderMaterial(
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
     }
   `,
-  // fragment shader
-  `
+	// fragment shader
+	`
     uniform float time;
     uniform float speed;
     uniform float rgbShiftStrength;

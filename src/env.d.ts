@@ -3,7 +3,7 @@
 /// <reference types="./three-lens-distortion.d.ts" />
 
 interface Window {
-  __theme?: {
-    toggleTheme: () => void;
-  };
+	__theme?: {
+		toggleTheme: () => void;
+	};
 }
