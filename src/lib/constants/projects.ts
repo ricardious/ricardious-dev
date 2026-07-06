@@ -67,7 +67,7 @@ const projectsData: Omit<Project, 'id' | 'index'>[] = [
 		date: '2026',
 		role: 'Product Design, Frontend Development',
 		techs: ['React 19', 'TypeScript', 'FastAPI', 'PostgreSQL'],
-		websiteLink: 'https://semestrix.ricardious.workers.dev/',
+		websiteLink: 'https://semestrix.ricardious.dev/',
 		description:
 			'Plataforma de planificación académica enfocada en organización semestral, creación de horarios, seguimiento del progreso y visualización de datos del estudiante.',
 		overview:
