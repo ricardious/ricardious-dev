@@ -5,12 +5,16 @@ import Icon from "@atoms/Icon.astro";
 import ImageSlider from "@atoms/ImageSlider.astro";
 import TextSpawn from "@atoms/TextSpawn.astro";
 import Layout from "@layouts/Layout.astro";
-import projects from "@lib/constants/projects";
+import fullImage from "@/assets/home/full-image.webp";
+import education from "@lib/constants/education";
+import experience from "@lib/constants/experience";
 import Certifications from "@molecules/Certifications.astro";
+import EntryList from "@molecules/EntryList.astro";
+import TechStack from "@molecules/TechStack.astro";
 import ProjectsPreview from "@molecules/ProjectsPreview.astro";
 import PageTemplate from "@templates/PageTemplate.astro";
 
-const fullImageSrc = projects[0].coverImg;
+const fullImageSrc = fullImage.src;
 ---
 
 <Layout title="Ricardious | Sobre mí">
@@ -77,6 +81,15 @@ const fullImageSrc = projects[0].coverImg;
       </a>
     </section>
 
+    <!-- Tech stack -->
+    <TechStack />
+
+    <!-- Experience -->
+    <EntryList heading="Experiencia" entries={experience} />
+
+    <!-- Education -->
+    <EntryList heading="Educación" entries={education} />
+
     <!-- Certifications -->
     <Certifications />
 
@@ -91,7 +104,7 @@ const fullImageSrc = projects[0].coverImg;
     <div class="spacer"></div>
 
     <!-- Full image -->
-    <FullImage src={fullImageSrc} alt={projects[0].title} />
+    <FullImage src={fullImageSrc} alt="Escultura de vidrio líquido" brand />
   </PageTemplate>
 </Layout>
 
