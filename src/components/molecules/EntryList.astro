@@ -1,0 +1,55 @@
+---
+/**
+ * EntryList: generic timeline-style list (period · title · subtitle · detail).
+ * Used for Experience and Education. Data is passed in via the `entries` prop.
+ */
+import Headline from "@atoms/Headline.astro";
+
+interface Entry {
+  period: string;
+  title: string;
+  subtitle?: string;
+  detail?: string;
+}
+
+interface Props {
+  heading: string;
+  entries: Entry[];
+}
+
+const { heading, entries } = Astro.props;
+---
+
+<section class="entry-list margin-page flex w-screen flex-col items-center">
+  <Headline name={heading} />
+
+  <ul class="w-full">
+    {
+      entries.map((entry) => (
+        <li class="w-full">
+          <div class="flex items-baseline justify-between gap-8 py-6 max-md:flex-col max-md:gap-2">
+            <span class="text-text order-2 shrink-0 text-[12px] uppercase tracking-[0.12em] md:order-none md:w-40">
+              {entry.period}
+            </span>
+            <div class="order-1 flex-1 md:order-none">
+              <h3 class="text-text-standard text-[clamp(1.15rem,2.4vw,1.55rem)] font-medium leading-snug">
+                {entry.title}
+              </h3>
+              {entry.subtitle && (
+                <p class="text-text mt-2 text-[12px] uppercase tracking-[0.12em]">
+                  {entry.subtitle}
+                </p>
+              )}
+              {entry.detail && (
+                <p class="text-text mt-3 max-w-2xl text-[13px] leading-relaxed">
+                  {entry.detail}
+                </p>
+              )}
+            </div>
+          </div>
+          <div class="separator" />
+        </li>
+      ))
+    }
+  </ul>
+</section>
