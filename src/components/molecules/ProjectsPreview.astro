@@ -84,9 +84,6 @@ const hasMoreProjects = projects.length > previewProjects.length;
       ".project-item[data-cover]",
     );
     const cleanups: Array<() => void> = [];
-    let rafId = 0;
-    let currentScrollY = window.scrollY;
-    let targetScrollY = window.scrollY;
 
     const updatePosition = (event: MouseEvent) => {
       hoverContainer.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
@@ -100,26 +97,8 @@ const hasMoreProjects = projects.length > previewProjects.length;
       hidePreview();
     };
 
-    const onScroll = () => {
-      targetScrollY = window.scrollY;
-    };
-
-    const tick = () => {
-      currentScrollY += (targetScrollY - currentScrollY) * 0.1;
-
-      if (Math.abs(targetScrollY - currentScrollY) < 0.1) {
-        currentScrollY = targetScrollY;
-      }
-
-      hoverWrapper.style.transform = `translate3d(0, ${currentScrollY}px, 0)`;
-      rafId = window.requestAnimationFrame(tick);
-    };
-
     window.addEventListener("mousemove", updatePosition);
     window.addEventListener("mouseleave", onWindowLeave);
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    tick();
 
     cleanups.push(() =>
       window.removeEventListener("mousemove", updatePosition),
@@ -127,8 +106,6 @@ const hasMoreProjects = projects.length > previewProjects.length;
     cleanups.push(() =>
       window.removeEventListener("mouseleave", onWindowLeave),
     );
-    cleanups.push(() => window.removeEventListener("scroll", onScroll));
-    cleanups.push(() => window.cancelAnimationFrame(rafId));
 
     items.forEach((item) => {
       const onEnter = () => {
