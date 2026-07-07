@@ -1,25 +1,27 @@
 ---
 /**
- * ImageSlider: Auto-cycling image slider with overlay transition.
- * Uses vanilla JS (no React/GSAP needed).
+ * ImageSlider: auto-cycling image slider.
+ * Transition is a colorless clip-path wipe between two stacked layers,
+ * so the incoming image reveals over the current one with no color / flash.
  */
 import projects from "@lib/constants/projects";
 
 const images = projects.map((p) => p.coverImgSmall);
 ---
 
-<div
-  class="img-slider relative w-full aspect-3/2 overflow-hidden cursor-pointer"
->
-  <div
-    class="slider-overlay absolute inset-0 bg-primary z-10 -translate-x-full"
-  >
-  </div>
+<div class="img-slider relative w-full aspect-3/2 overflow-hidden cursor-pointer">
   <img
-    class="slider-img absolute w-full h-full object-cover"
+    class="slider-base absolute inset-0 h-full w-full object-cover"
     src={images[0]}
     alt="Project preview"
     loading="eager"
+  />
+  <img
+    class="slider-top absolute inset-0 h-full w-full object-cover"
+    src={images[0]}
+    alt=""
+    aria-hidden="true"
+    style="clip-path: inset(0 100% 0 0);"
   />
 </div>
 
@@ -28,32 +30,36 @@ const images = projects.map((p) => p.coverImgSmall);
     const container = document.querySelector(".img-slider");
     if (!container || images.length < 2) return;
 
-    const img = container.querySelector(".slider-img");
-    const overlay = container.querySelector(".slider-overlay");
-    if (!img || !overlay) return;
+    const base = container.querySelector(".slider-base");
+    const top = container.querySelector(".slider-top");
+    if (!base || !top) return;
+
+    if (container.__sliderTimer) clearInterval(container.__sliderTimer);
 
     let index = 0;
+    const WIPE = 700;
 
-    setInterval(() => {
-      // Slide overlay in
-      overlay.style.transition = "transform 0.3s ease";
-      overlay.style.transform = "translateX(0)";
+    container.__sliderTimer = setInterval(() => {
+      const next = (index + 1) % images.length;
 
+      // Prepare the incoming image, hidden on the left.
+      top.src = images[next];
+      top.style.transition = "none";
+      top.style.clipPath = "inset(0 100% 0 0)";
+      void top.offsetWidth; // force reflow so the reset applies
+
+      // Wipe it in (left -> right).
+      top.style.transition = `clip-path ${WIPE}ms cubic-bezier(0.77, 0, 0.175, 1)`;
+      top.style.clipPath = "inset(0 0 0 0)";
+
+      // Commit to the base layer and reset the top for the next cycle.
       setTimeout(() => {
-        // Switch image
-        index = (index + 1) % images.length;
-        img.src = images[index];
-
-        // Slide overlay out
-        overlay.style.transform = "translateX(100%)";
-
-        setTimeout(() => {
-          // Reset overlay position
-          overlay.style.transition = "none";
-          overlay.style.transform = "translateX(-100%)";
-        }, 300);
-      }, 300);
-    }, 5000);
+        base.src = images[next];
+        top.style.transition = "none";
+        top.style.clipPath = "inset(0 100% 0 0)";
+        index = next;
+      }, WIPE);
+    }, 4000);
   }
 
   initSlider();
