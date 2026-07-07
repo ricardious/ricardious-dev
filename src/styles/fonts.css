@@ -1,7 +1,6 @@
 @theme {
 	--font-body: "UncutSans", -apple-system, BlinkMacSystemFont, sans-serif;
 	--font-heading: "Ginger", Georgia, serif;
-	--font-display: "Romie", Georgia, serif;
 }
 
 @font-face {
@@ -47,14 +46,6 @@
 @font-face {
 	font-family: "Ginger";
 	src: url("/fonts/Chloe-Regular.otf") format("opentype");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Romie";
-	src: url("/fonts/Romie-Regular.ttf") format("truetype");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
