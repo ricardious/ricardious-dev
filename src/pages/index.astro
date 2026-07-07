@@ -5,15 +5,16 @@ import Icon from "@atoms/Icon.astro";
 import ImageSlider from "@atoms/ImageSlider.astro";
 import TextSpawn from "@atoms/TextSpawn.astro";
 import Layout from "@layouts/Layout.astro";
+import projects from "@lib/constants/projects";
 import Certifications from "@molecules/Certifications.astro";
 import ProjectsPreview from "@molecules/ProjectsPreview.astro";
 import PageTemplate from "@templates/PageTemplate.astro";
 
-const fullImageSrc = "https://picsum.photos/id/1035/1920/1080";
+const fullImageSrc = projects[0].coverImg;
 ---
 
 <Layout title="Ricardious | Sobre mí">
-  <PageTemplate hasTransitionPanel={true} smoothScroll={true}>
+  <PageTemplate hasTransitionPanel={true}>
     <section
       class="hero relative flex h-screen w-screen items-center justify-center pb-[5vh] max-[900px]:margin-page max-[700px]:p-0"
     >
@@ -82,7 +83,7 @@ const fullImageSrc = "https://picsum.photos/id/1035/1920/1080";
 
     <div class="spacer"></div>
 
-    <FullImage src={fullImageSrc} alt="moodboard" />
+    <FullImage src={fullImageSrc} alt={projects[0].title} />
   </PageTemplate>
 </Layout>
 
