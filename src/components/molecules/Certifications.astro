@@ -1,0 +1,59 @@
+---
+/**
+ * Certifications: minimal list of certifications driven by
+ * src/lib/constants/certifications.ts. Rows link to the credential when a
+ * credentialUrl is provided, otherwise they render as plain text.
+ */
+import Headline from "@atoms/Headline.astro";
+import certifications from "@lib/constants/certifications";
+---
+
+<section class="certifications margin-page flex w-screen flex-col items-center">
+	<Headline name="Certificaciones" />
+
+	<ul class="w-full">
+		{
+			certifications.map((cert) => {
+				const hasLink = Boolean(cert.credentialUrl);
+				const Tag = hasLink ? "a" : "div";
+				const linkProps = hasLink
+					? {
+							href: cert.credentialUrl,
+							target: "_blank",
+							rel: "noopener noreferrer",
+						}
+					: {};
+
+				return (
+					<li class="cert-item group w-full">
+						<Tag
+							class="flex items-baseline justify-between gap-6 py-6 transition-transform duration-300 ease-out group-hover:translate-x-3"
+							{...linkProps}
+						>
+							<div class="flex items-baseline gap-6 max-sm:gap-4">
+								<span class="text-text mt-1 shrink-0 text-[12px]">
+									{cert.year}
+								</span>
+								<div>
+									<div class="font-heading text-text-standard text-[clamp(1.25rem,3.2vw,1.9rem)] uppercase leading-[1.05]">
+										{cert.name}
+									</div>
+									<div class="text-text mt-2 text-[12px] uppercase tracking-[0.12em]">
+										{cert.issuer}
+									</div>
+								</div>
+							</div>
+
+							{hasLink && (
+								<span class="text-text shrink-0 self-center text-[11px] uppercase tracking-[0.12em] opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden">
+									Ver credencial ↗
+								</span>
+							)}
+						</Tag>
+						<div class="separator"></div>
+					</li>
+				);
+			})
+		}
+	</ul>
+</section>
