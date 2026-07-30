@@ -6,25 +6,42 @@ export interface Certification {
 	credentialUrl?: string;
 }
 
-// TODO: reemplaza estos ejemplos con tus certificaciones reales.
 const certifications: Certification[] = [
 	{
-		name: "Python para todos",
-		issuer: "University of Michigan · Coursera",
-		year: "2024",
-		credentialUrl: "",
+		name: 'Inteligencia Artificial con Python',
+		issuer: 'Samsung Innovation Campus · FUNDESTEAM',
+		year: '2025',
+		credentialUrl: '/certs/samsung-innovation-campus-ai.pdf',
 	},
 	{
-		name: "Desarrollo web responsivo",
-		issuer: "freeCodeCamp",
-		year: "2023",
-		credentialUrl: "",
+		name: 'Diploma — Festival Cultural y Científico VÓRTICE',
+		issuer: 'USAC',
+		year: '2025',
+		credentialUrl: '',
 	},
 	{
-		name: "Algoritmos y estructuras de datos",
-		issuer: "freeCodeCamp",
-		year: "2023",
-		credentialUrl: "",
+		name: 'Introducción a Java',
+		issuer: 'INTECAP',
+		year: '2024',
+		credentialUrl: '',
+	},
+	{
+		name: 'Técnicas para el Análisis de Documentación',
+		issuer: 'USAC · Diplomado Estrategias de Lectura',
+		year: '2024',
+		credentialUrl: '',
+	},
+	{
+		name: 'Microsoft Word, Excel, Internet y Windows',
+		issuer: 'SAE/SAP',
+		year: '2023',
+		credentialUrl: '',
+	},
+	{
+		name: 'Técnico en Sistemas de Informática (Nivel Inicial)',
+		issuer: 'COMPUCEIC',
+		year: '2022',
+		credentialUrl: '',
 	},
 ];
 
