@@ -4,14 +4,26 @@
  * src/lib/constants/certifications.ts. Rows link to the credential when a
  * credentialUrl is provided, otherwise they render as plain text.
  */
-import Headline from "@atoms/Headline.astro";
+import SectionMarker from "@atoms/SectionMarker.astro";
 import certifications from "@lib/constants/certifications";
+
+interface Props {
+	index?: string;
+}
+
+const { index } = Astro.props;
 ---
 
 <section class="certifications margin-page flex w-screen flex-col items-center">
-	<Headline name="Certificaciones" />
+	<div data-reveal class="w-full">
+		<SectionMarker
+			index={index}
+			label="Certificaciones"
+			meta={`${certifications.length} credenciales`}
+		/>
+	</div>
 
-	<ul class="w-full">
+	<ul class="mt-[4vh] w-full">
 		{
 			certifications.map((cert) => {
 				const hasLink = Boolean(cert.credentialUrl);
@@ -25,7 +37,7 @@ import certifications from "@lib/constants/certifications";
 					: {};
 
 				return (
-					<li class="cert-item group w-full">
+					<li class="cert-item group w-full" data-reveal>
 						<Tag
 							class="flex items-baseline justify-between gap-6 py-6 transition-transform duration-300 ease-out group-hover:translate-x-3"
 							{...linkProps}
