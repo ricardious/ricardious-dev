@@ -1,0 +1,91 @@
+---
+/**
+ * Manifesto: bloque de apertura de la portada. Sustituye a la biografía
+ * centrada por una declaración editorial con la display serif a gran escala,
+ * un párrafo de apoyo y el índice de disciplinas.
+ */
+import SectionMarker from "@atoms/SectionMarker.astro";
+
+interface Props {
+  index?: string;
+}
+
+const { index } = Astro.props;
+
+const disciplines = [
+  "Diseño de producto & branding",
+  "Desarrollo front-end",
+  "Back-end en Python",
+  "Gráficos en tiempo real",
+];
+---
+
+<section class="manifesto margin-page flex w-screen flex-col">
+  <div data-reveal>
+    <SectionMarker index={index} label="Manifiesto" meta="Guatemala · 2026" />
+  </div>
+
+  <div data-reveal class="mt-[9vh] max-md:mt-[7vh]">
+    <p
+      class="text-text-standard font-body text-[clamp(1.35rem,2.8vw,2.5rem)] font-light leading-[1.15]"
+    >
+      Diseño y construyo
+    </p>
+    <p
+      class="text-accent font-heading uppercase text-[clamp(3rem,10vw,9rem)] leading-[0.84]"
+    >
+      experiencias digitales
+    </p>
+    <p
+      class="text-text-standard mt-[0.35em] font-body text-[clamp(1.35rem,2.8vw,2.5rem)] font-light leading-[1.15]"
+    >
+      para marcas, startups y la web.
+    </p>
+  </div>
+
+  <div
+    class="mt-[11vh] grid w-full grid-cols-12 gap-x-10 gap-y-12 max-md:mt-[7vh] max-md:grid-cols-1"
+  >
+    <div
+      data-reveal
+      class="col-span-5 max-lg:col-span-6 max-md:col-span-1"
+    >
+      <p
+        class="text-text max-w-[46ch] text-[clamp(0.95rem,1.15vw,1.05rem)] leading-[1.75]"
+      >
+        Combino diseño y branding con desarrollo front-end y back-end en Python
+        para construir productos completos, modernos y con propósito. Me guío
+        por el minimalismo y la atención al detalle para diseñar experiencias
+        que dan vida a la visión de cada marca con claridad y elegancia.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+        <a class="link-arrow" href="#sobre-mi">Sobre mí</a>
+        <a
+          class="link-arrow"
+          href="https://github.com/ricardious"
+          target="_blank"
+          rel="noopener noreferrer">GitHub</a
+        >
+      </div>
+    </div>
+
+    <ul
+      data-reveal="late"
+      class="col-span-5 col-start-8 max-lg:col-span-6 max-lg:col-start-7 max-md:col-span-1 max-md:col-start-1"
+    >
+      {
+        disciplines.map((discipline, index) => (
+          <li class="border-text-disabled2 flex items-baseline justify-between gap-6 border-t py-4 transition-colors duration-600 last:border-b">
+            <span class="text-text-standard text-[clamp(1rem,1.4vw,1.15rem)]">
+              {discipline}
+            </span>
+            <span class="text-accent shrink-0 text-[10px] tabular-nums tracking-[0.18em]">
+              {`0${index + 1}`}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
