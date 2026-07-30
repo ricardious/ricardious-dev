@@ -14,6 +14,10 @@ const {
   location = "Guatemala, GT",
   email = "castaneda.systems@gmail.com",
 } = Astro.props;
+
+// La portada es la página "sobre mí", así que el enlace va marcado al estar
+// en ella. autoActive no sirve aquí: el href lleva ancla y nunca casaría.
+const isHome = Astro.url.pathname === "/";
 ---
 
 <header
@@ -29,7 +33,7 @@ const {
   </a>
 
   <nav class="flex items-center gap-6 max-md:gap-5">
-    <NavLink href="/#sobre-mi" autoActive={false}>
+    <NavLink href="/#sobre-mi" isActive={isHome}>
       [ SOBRE MÍ ]
     </NavLink>
     <a
