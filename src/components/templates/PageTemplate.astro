@@ -16,6 +16,8 @@ const { hasFooter = true } = Astro.props;
 
 <script>
   function resetScroll() {
+    // Respeta la navegación por ancla (#sobre-mi); si no, arranca arriba.
+    if (window.location.hash) return;
     window.scrollTo(0, 0);
   }
 
