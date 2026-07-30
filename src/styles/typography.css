@@ -278,6 +278,57 @@
 		}
 	}
 
+	/* Link con flecha: reemplaza al .button en contextos editoriales */
+	.link-arrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding-bottom: 8px;
+		font-family: var(--font-body);
+		font-size: 11px;
+		font-weight: normal;
+		text-transform: uppercase;
+		letter-spacing: 0.14em;
+		color: var(--color-text-standard);
+		border-bottom: 1px solid var(--color-text-disabled2);
+		transition:
+			border-color 0.4s,
+			color 0.4s;
+
+		&::after {
+			content: "↗";
+			font-size: 12px;
+			line-height: 1;
+			transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		&:hover {
+			border-color: var(--color-text-standard);
+
+			&::after {
+				transform: translate(3px, -3px);
+			}
+		}
+	}
+
+	/* Reveal en scroll — CSS puro, sin JS ni IntersectionObserver.
+	   El estado oculto vive dentro de @supports: si el navegador no soporta
+	   scroll-driven animations, el contenido se muestra tal cual. */
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			[data-reveal] {
+				animation: reveal-rise linear both;
+				animation-timeline: view();
+				animation-range: entry 10% entry 60%;
+			}
+
+			/* Segundo tiempo, para columnas que comparten borde superior. */
+			[data-reveal="late"] {
+				animation-range: entry 25% entry 80%;
+			}
+		}
+	}
+
 	/* Separator */
 	.separator {
 		margin: 4vh 0;
@@ -298,5 +349,16 @@
 			height: 100vh;
 			width: 100vw;
 		}
+	}
+}
+
+@keyframes reveal-rise {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 34px, 0);
+	}
+	to {
+		opacity: 1;
+		transform: none;
 	}
 }
