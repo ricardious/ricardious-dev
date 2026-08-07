@@ -14,7 +14,7 @@ const stack: StackGroup[] = [
 	{
 		label: 'Frontend',
 		items: [
-			{ name: 'React 19', slug: 'react' },
+			{ name: 'React', slug: 'react' },
 			{ name: 'TypeScript', slug: 'typescript' },
 			{ name: 'Astro', slug: 'astro' },
 			{ name: 'Tailwind CSS', slug: 'tailwindcss' },
@@ -27,9 +27,15 @@ const stack: StackGroup[] = [
 		items: [
 			{ name: 'Python', slug: 'python' },
 			{ name: 'FastAPI', slug: 'fastapi' },
-			{ name: 'PostgreSQL', slug: 'postgresql' },
 			{ name: 'SQLAlchemy', slug: 'sqlalchemy' },
 			{ name: 'Node.js', slug: 'nodedotjs' },
+		],
+	},
+	{
+		label: 'Bases de datos',
+		items: [
+			{ name: 'PostgreSQL', slug: 'postgresql' },
+			{ name: 'MongoDB', slug: 'mongodb' },
 		],
 	},
 	{

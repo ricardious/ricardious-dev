@@ -66,7 +66,7 @@ const projectsData: Omit<Project, 'id' | 'index'>[] = [
 		visual1: visual1.src,
 		date: '2026',
 		role: 'Product Design, Frontend Development',
-		techs: ['React 19', 'TypeScript', 'FastAPI', 'PostgreSQL'],
+		techs: ['React', 'TypeScript', 'FastAPI', 'PostgreSQL'],
 		websiteLink: 'https://semestrix.ricardious.dev/',
 		description:
 			'Plataforma de planificación académica enfocada en organización semestral, creación de horarios, seguimiento del progreso y visualización de datos del estudiante.',
@@ -108,7 +108,7 @@ const projectsData: Omit<Project, 'id' | 'index'>[] = [
 			{
 				label: 'Frontend',
 				items: [
-					'React 19',
+					'React',
 					'TypeScript',
 					'Vite 7',
 					'Tailwind CSS 4',
@@ -270,7 +270,7 @@ const projectsData: Omit<Project, 'id' | 'index'>[] = [
 		visual1: physicsDeviceMockup.src,
 		date: '2025',
 		role: 'Product Design, Frontend Development',
-		techs: ['Astro 6', 'React 19', 'Tailwind CSS 4', 'GitHub Pages'],
+		techs: ['Astro 6', 'React', 'Tailwind CSS 4', 'GitHub Pages'],
 		websiteLink: 'https://ricardious.github.io/physics-lab-portal/',
 		description:
 			'Portal academico para centralizar manuales, documentos y herramientas de los laboratorios de Fisica de la Facultad de Ingenieria con una experiencia mucho mas clara y util.',
@@ -311,7 +311,7 @@ const projectsData: Omit<Project, 'id' | 'index'>[] = [
 		toolGroups: [
 			{
 				label: 'Frontend',
-				items: ['Astro 6', 'React 19', 'TypeScript', 'Tailwind CSS 4'],
+				items: ['Astro 6', 'React', 'TypeScript', 'Tailwind CSS 4'],
 			},
 			{
 				label: 'Producto',
