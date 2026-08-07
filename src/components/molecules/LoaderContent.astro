@@ -1,26 +1,36 @@
 ---
+/**
+ * LoaderContent: riel inferior del loader — marca a la izquierda, porcentaje a
+ * la derecha y la barra debajo. El porcentaje lo pinta un contador CSS a partir
+ * de --loader-progress, de modo que la cifra se anima sola con la variable.
+ */
 import LoaderLine from "@atoms/LoaderLine.astro";
 import LoaderText from "@atoms/LoaderText.astro";
 
 interface Props {
   title?: string;
-  percentageId?: string;
-  lineId?: string;
 }
 
-const {
-  title = "ricardious",
-  percentageId = "loader-percentage",
-  lineId = "loader-line",
-} = Astro.props;
+const { title = "ricardious" } = Astro.props;
 ---
 
-<div
-  class="absolute left-1/2 -translate-x-1/2 bottom-10 w-[90%] flex items-center flex-col flex-nowrap"
->
-  <div class="w-full flex flex-row flex-nowrap items-center justify-between">
-    <LoaderText text={title} class="font-heading" />
-    <LoaderText text="00%" class="percentage" id={percentageId} />
+<div class="padding-global absolute bottom-10 left-0 w-full max-md:bottom-8">
+  <div class="flex w-full items-baseline justify-between gap-6">
+    <LoaderText text={title} class="font-heading uppercase" />
+    <span
+      class="loader-pct text-text font-body text-[clamp(1rem,2.4vw,2rem)] leading-none tabular-nums"
+    ></span>
   </div>
-  <LoaderLine id={lineId} />
+
+  <LoaderLine />
 </div>
+
+<style>
+  .loader-pct {
+    counter-reset: pct var(--loader-progress, 0);
+  }
+
+  .loader-pct::after {
+    content: counter(pct, decimal-leading-zero) "%";
+  }
+</style>

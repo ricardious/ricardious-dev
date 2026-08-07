@@ -4,115 +4,114 @@ import LoaderContent from "@molecules/LoaderContent.astro";
 interface Props {
   title?: string;
   id?: string;
-  animationDuration?: number;
+  /** ms que se sostiene el 100% antes de retirarse */
+  holdAfterComplete?: number;
+  /** red de seguridad por si `load` nunca llega */
   fallbackTimeout?: number;
 }
 
 const {
   title = "ricardious",
   id = "loader",
-  animationDuration = 600,
-  fallbackTimeout = 5000,
+  holdAfterComplete = 420,
+  fallbackTimeout = 6000,
 } = Astro.props;
-
-const percentageId = `${id}-percentage`;
-const lineId = `${id}-line`;
 ---
 
 <div
-  class="fixed top-0 left-0 z-10000 flex items-end w-screen h-screen bg-background transition-[background-color,opacity] duration-300"
   id={id}
+  class="loader bg-background fixed inset-0 z-10000 flex items-end"
+  role="progressbar"
+  aria-label="Cargando"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
   transition:persist="loader"
-  data-animation-duration={animationDuration}
-  data-fallback-timeout={fallbackTimeout}
+  data-hold={holdAfterComplete}
+  data-fallback={fallbackTimeout}
 >
-  <LoaderContent title={title} percentageId={percentageId} lineId={lineId} />
+  <LoaderContent title={title} />
 </div>
+
+<style>
+  /* Registrar la propiedad la vuelve interpolable: la barra y el contador
+     se animan solos al cambiar el valor, sin bucle de requestAnimationFrame. */
+  @property --loader-progress {
+    syntax: "<integer>";
+    inherits: true;
+    initial-value: 0;
+  }
+
+  .loader {
+    --loader-progress: 0;
+    transition:
+      --loader-progress 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 900ms cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+  }
+
+  /* Se retira hacia arriba, igual que el panelWipe de las view transitions. */
+  .loader[data-state="done"] {
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loader {
+      transition:
+        --loader-progress 1ms linear,
+        opacity 200ms linear;
+    }
+
+    .loader[data-state="done"] {
+      transform: none;
+      opacity: 0;
+    }
+  }
+</style>
 
 <script>
   function initLoader() {
-    const loader = document.getElementById("loader") as HTMLElement | null;
-    if (!loader) return;
+    const loader = document.getElementById("loader");
+    if (!loader || loader.dataset.state === "done") return;
 
-    const percentage = document.getElementById("loader-percentage");
-    const line = document.getElementById("loader-line");
-    const animationDuration = Number(loader.dataset.animationDuration) || 600;
-    const fallbackTimeout = Number(loader.dataset.fallbackTimeout) || 5000;
+    const hold = Number(loader.dataset.hold) || 420;
+    const fallback = Number(loader.dataset.fallback) || 6000;
+    let settled = false;
 
-    let progress = 0;
-    let targetProgress = 0;
-    let _animationFrame: number;
-    let isComplete = false;
+    const set = (value: number) => {
+      loader.style.setProperty("--loader-progress", String(value));
+      loader.setAttribute("aria-valuenow", String(value));
+    };
 
-    function updateProgress(value: number) {
-      progress = value;
-      if (percentage) percentage.textContent = `${Math.round(progress)}%`;
-      if (line) line.style.width = `${progress}%`;
-    }
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      set(100);
 
-    function animate() {
-      if (progress < targetProgress) {
-        const increment = Math.max(0.5, (targetProgress - progress) * 0.1);
-        updateProgress(Math.min(progress + increment, targetProgress));
-        _animationFrame = requestAnimationFrame(animate);
-      } else if (isComplete && progress >= 100) {
-        hideLoader();
-      } else {
-        _animationFrame = requestAnimationFrame(animate);
-      }
-    }
+      // El retiro va por temporizador y nunca atado a que la animación llegue
+      // al final: si el compositor se congela, la página aparece igualmente.
+      window.setTimeout(() => {
+        loader.dataset.state = "done";
+        loader.setAttribute("aria-hidden", "true");
+      }, hold);
+    };
 
-    function hideLoader() {
-      if (loader) {
-        loader.style.opacity = "0";
-        loader.style.transition = `opacity ${animationDuration}ms ease`;
-        setTimeout(() => {
-          loader.style.display = "none";
-        }, animationDuration);
-      }
-    }
+    set(8);
 
-    function resetLoader() {
-      if (loader) {
-        loader.style.display = "flex";
-        loader.style.opacity = "1";
-        isComplete = false;
-        progress = 0;
-        targetProgress = 30;
-        updateProgress(0);
-        animate();
-      }
-    }
-
-    function startLoading() {
-      targetProgress = 30;
-      animate();
-
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () => {
-          targetProgress = 70;
-        });
-      } else {
-        targetProgress = 70;
-      }
-
-      window.addEventListener("load", () => {
-        targetProgress = 100;
-        isComplete = true;
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => set(62), {
+        once: true,
       });
-
-      setTimeout(() => {
-        if (!isComplete) {
-          targetProgress = 100;
-          isComplete = true;
-        }
-      }, fallbackTimeout);
+    } else {
+      set(62);
     }
 
-    // Initial load
-    startLoading();
+    if (document.readyState === "complete") finish();
+    else window.addEventListener("load", finish, { once: true });
+
+    window.setTimeout(finish, fallback);
   }
 
-  // Run on initial load
   initLoader();
 </script>

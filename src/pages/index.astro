@@ -24,7 +24,7 @@ const projectCount = projects.length;
   title="Ricardious | Diseñador & Desarrollador"
   description="Portafolio de Alex Ricardo Castañeda Rodríguez — diseño y desarrollo de productos digitales desde Guatemala."
 >
-  <PageTemplate hasTransitionPanel={true}>
+  <PageTemplate>
     <!-- Hero -->
     <section
       class="hero relative flex h-screen w-screen items-center justify-center pb-[8vh] max-[900px]:margin-page max-[700px]:p-0"
@@ -54,13 +54,13 @@ const projectCount = projects.length;
         class="hero-rail margin-page pointer-events-none absolute bottom-24 left-0 flex w-full animate-fadeIn items-end justify-between gap-6 opacity-0 [animation-delay:900ms] max-md:bottom-20"
       >
         <span
-          class="text-text/70 text-[10px] whitespace-nowrap uppercase leading-[1.6] tracking-[0.16em] max-sm:hidden"
+          class="hero-rail-fade text-text/70 text-[10px] whitespace-nowrap uppercase leading-[1.6] tracking-[0.16em] max-sm:hidden"
         >
           Diseñador & desarrollador
         </span>
 
         <div
-          class="discover absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center"
+          class="hero-rail-fade discover absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center"
         >
           <span class="font-body text-[10px] uppercase text-text">descubre</span
           >
@@ -68,7 +68,7 @@ const projectCount = projects.length;
         </div>
 
         <span
-          class="text-text/70 text-right text-[10px] uppercase leading-[1.6] tracking-[0.16em] tabular-nums max-sm:hidden"
+          class="hero-rail-fade text-text/70 text-right text-[10px] uppercase leading-[1.6] tracking-[0.16em] tabular-nums max-sm:hidden"
         >
           Portafolio 2026
         </span>
@@ -124,17 +124,16 @@ const projectCount = projects.length;
 </Layout>
 
 <style>
-  /* El indicador se desvanece con el scroll — animación ligada al scroll,
-     sin listeners. Sin soporte simplemente se va con el hero. */
+  /* El riel editorial se desvanece con el scroll, sin listeners. */
   @supports (animation-timeline: scroll()) {
-    .discover {
-      animation: discover-fade linear both;
+    .hero-rail-fade {
+      animation: hero-rail-fade linear both;
       animation-timeline: scroll(root block);
       animation-range: 0 300px;
     }
   }
 
-  @keyframes discover-fade {
+  @keyframes hero-rail-fade {
     to {
       opacity: 0;
     }

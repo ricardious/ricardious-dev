@@ -2,18 +2,16 @@
 interface Props {
   text: string;
   class?: string;
-  id?: string;
 }
 
-const { text, class: className = "", id } = Astro.props;
+const { text, class: className = "" } = Astro.props;
 ---
 
 <div
   class:list={[
-    "font-body text-[60px] max-md:text-[40px] max-sm:text-[20px] text-white tracking-[0] mb-4",
+    "text-text-standard font-body text-[clamp(1.75rem,5vw,3.75rem)] leading-none",
     className,
   ]}
-  id={id}
 >
   {text}
 </div>

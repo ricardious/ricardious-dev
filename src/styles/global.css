@@ -44,61 +44,41 @@
 		animation-duration: 0.9s;
 	}
 
+	html:not(.theme-transitioning)::view-transition-image-pair(root) {
+		background: var(--color-background);
+	}
+
 	html:not(.theme-transitioning)::view-transition-old(root) {
-		animation: delayHide 0.9s forwards;
+		animation: pageWipeOut 0.9s cubic-bezier(0.77, 0, 0.175, 1) both;
 		opacity: 1;
 		mix-blend-mode: normal;
 		z-index: 1;
 	}
 
 	html:not(.theme-transitioning)::view-transition-new(root) {
-		animation: delayShow 0.9s forwards;
-		opacity: 0;
+		animation: pageWipeIn 0.9s cubic-bezier(0.77, 0, 0.175, 1) both;
+		opacity: 1;
 		mix-blend-mode: normal;
 		z-index: 2;
 	}
 
-	@keyframes delayHide {
-		0%,
-		50% {
-			opacity: 1;
-		}
-		50.1%,
-		100% {
-			opacity: 0;
-		}
-	}
-
-	@keyframes delayShow {
-		0%,
-		50% {
-			opacity: 0;
-		}
-		50.1%,
-		100% {
-			opacity: 1;
-		}
-	}
-
-	html:not(.theme-transitioning)::view-transition-image-pair(root)::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background: var(--color-background);
-		z-index: 9999;
-		animation: panelWipe 0.9s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-	}
-
-	@keyframes panelWipe {
+	@keyframes pageWipeOut {
 		0% {
-			transform: translateY(100%);
+			clip-path: inset(0 0 0 0);
 		}
 		45%,
+		100% {
+			clip-path: inset(0 0 100% 0);
+		}
+	}
+
+	@keyframes pageWipeIn {
+		0%,
 		55% {
-			transform: translateY(0%);
+			clip-path: inset(100% 0 0 0);
 		}
 		100% {
-			transform: translateY(-100%);
+			clip-path: inset(0 0 0 0);
 		}
 	}
 }
