@@ -15,6 +15,7 @@ const stack: StackGroup[] = [
 		label: 'Frontend',
 		items: [
 			{ name: 'React', slug: 'react' },
+			{ name: 'Next.js', slug: 'nextdotjs' },
 			{ name: 'TypeScript', slug: 'typescript' },
 			{ name: 'Astro', slug: 'astro' },
 			{ name: 'Tailwind CSS', slug: 'tailwindcss' },
