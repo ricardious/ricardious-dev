@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "./fonts.css";
 @import "./theme.css";
-@import "./loader.css";
 @import "./typography.css";
 @import "./utilities.css";
 
@@ -21,23 +20,65 @@
 		cursor: none;
 	}
 
-	html::-webkit-scrollbar {
+	/* Hide scrollbar for all elements */
+	*::-webkit-scrollbar {
 		display: none;
 	}
 
-	/* Hide scrollbar for IE, Edge and Firefox */
-	html {
+	* {
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
 	}
 
 	body {
 		overflow-x: hidden;
-		font-weight: 100;
+		font-weight: 400;
 		font-family: var(--font-body);
 	}
 
 	a {
 		text-decoration: none;
+	}
+
+	html:not(.theme-transitioning)::view-transition-group(root) {
+		animation-duration: 0.9s;
+	}
+
+	html:not(.theme-transitioning)::view-transition-image-pair(root) {
+		background: var(--color-background);
+	}
+
+	html:not(.theme-transitioning)::view-transition-old(root) {
+		animation: pageWipeOut 0.9s cubic-bezier(0.77, 0, 0.175, 1) both;
+		opacity: 1;
+		mix-blend-mode: normal;
+		z-index: 1;
+	}
+
+	html:not(.theme-transitioning)::view-transition-new(root) {
+		animation: pageWipeIn 0.9s cubic-bezier(0.77, 0, 0.175, 1) both;
+		opacity: 1;
+		mix-blend-mode: normal;
+		z-index: 2;
+	}
+
+	@keyframes pageWipeOut {
+		0% {
+			clip-path: inset(0 0 0 0);
+		}
+		45%,
+		100% {
+			clip-path: inset(0 0 100% 0);
+		}
+	}
+
+	@keyframes pageWipeIn {
+		0%,
+		55% {
+			clip-path: inset(100% 0 0 0);
+		}
+		100% {
+			clip-path: inset(0 0 0 0);
+		}
 	}
 }

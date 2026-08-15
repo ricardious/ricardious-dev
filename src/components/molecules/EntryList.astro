@@ -1,0 +1,62 @@
+---
+/**
+ * EntryList: ficha editorial a tres columnas — periodo · puesto · descripción.
+ * La rejilla ocupa el ancho completo en lugar de amontonar todo a la izquierda.
+ * Se usa en Experiencia y Educación; los datos llegan por la prop `entries`.
+ */
+import SectionMarker from "@atoms/SectionMarker.astro";
+
+interface Entry {
+  period: string;
+  title: string;
+  subtitle?: string;
+  detail?: string;
+}
+
+interface Props {
+  heading: string;
+  entries: Entry[];
+  index?: string;
+}
+
+const { heading, entries, index } = Astro.props;
+const meta = `${entries.length} ${entries.length === 1 ? "registro" : "registros"}`;
+---
+
+<section class="entry-list margin-page flex w-screen flex-col items-center">
+  <div data-reveal class="w-full">
+    <SectionMarker index={index} label={heading} meta={meta} />
+  </div>
+
+  <ul class="mt-[5vh] w-full">
+    {
+      entries.map((entry) => (
+        <li class="entry group w-full" data-reveal>
+          <div class="grid grid-cols-12 items-baseline gap-x-10 gap-y-4 py-8 max-lg:grid-cols-1 max-lg:gap-y-3 max-lg:py-7">
+            <span class="text-text-standard col-span-2 text-[12px] uppercase tracking-[0.14em] tabular-nums transition-colors duration-300 group-hover:text-accent max-lg:col-span-1">
+              {entry.period}
+            </span>
+
+            <div class="col-span-5 max-lg:col-span-1">
+              <h3 class="text-text-standard text-[clamp(1.2rem,2vw,1.65rem)] font-medium leading-[1.25]">
+                {entry.title}
+              </h3>
+              {entry.subtitle && (
+                <p class="text-text mt-2.5 text-[11px] uppercase leading-[1.5] tracking-[0.14em]">
+                  {entry.subtitle}
+                </p>
+              )}
+            </div>
+
+            {entry.detail && (
+              <p class="text-text col-span-5 text-[13px] leading-[1.75] max-lg:col-span-1">
+                {entry.detail}
+              </p>
+            )}
+          </div>
+          <div class="separator" />
+        </li>
+      ))
+    }
+  </ul>
+</section>

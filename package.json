@@ -1,26 +1,38 @@
 {
-  "name": "ricardious-dev",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/react": "^4.4.2",
-    "@tailwindcss/vite": "^4.1.18",
-    "@types/react": "^19.2.10",
-    "@types/react-dom": "^19.2.3",
-    "astro": "^5.17.1",
-    "gsap": "^3.14.2",
-    "lerp": "^1.0.3",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "tailwindcss": "^4.1.18"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.3.13"
-  }
+	"name": "ricardious-dev",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"format": "biome format --write .",
+		"check": "biome check --write .",
+		"lint": "biome check ."
+	},
+	"dependencies": {
+		"@astrojs/check": "^0.9.9",
+		"@astrojs/react": "^5.0.7",
+		"@react-three/drei": "^10.7.7",
+		"@tailwindcss/vite": "^4.1.18",
+		"@types/react": "^19.2.10",
+		"@types/react-dom": "^19.2.3",
+		"astro": "^6.4.8",
+		"gsap": "^3.14.2",
+		"lerp": "^1.0.3",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"tailwindcss": "^4.1.18",
+		"three": "^0.182.0",
+		"three-lens-distortion": "github:ycw/three-lens-distortion",
+		"typescript": "^5.9.3",
+		"uuid": "^13.0.0",
+		"zustand": "^5.0.11"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.3.13",
+		"@react-three/fiber": "^9.5.0",
+		"@types/three": "^0.182.0"
+	}
 }

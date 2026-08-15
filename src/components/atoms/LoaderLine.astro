@@ -1,9 +1,19 @@
 ---
-interface Props {
-  id?: string;
-}
-
-const { id = "loader-line" } = Astro.props;
+/**
+ * LoaderLine: barra de progreso sobre una guía tenue.
+ * El ancho se deriva de --loader-progress, así que no hace falta tocarla
+ * desde JS: basta con animar la variable en el contenedor del loader.
+ */
 ---
 
-<div class="line" id={id}></div>
+<div
+  class="bg-text-disabled2 relative mt-5 h-0.5 w-full overflow-hidden transition-colors duration-600 max-md:mt-4"
+>
+  <div class="loader-line bg-text-standard absolute inset-y-0 left-0"></div>
+</div>
+
+<style>
+  .loader-line {
+    width: calc(var(--loader-progress, 0) * 1%);
+  }
+</style>

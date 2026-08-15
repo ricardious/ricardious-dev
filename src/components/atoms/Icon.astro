@@ -1,0 +1,43 @@
+---
+type IconName =
+  | "arrow-down"
+  | "discover-arrow"
+  | "arrow-right"
+  | "envelope-closed"
+  | "github-logo";
+
+interface Props {
+  name: IconName;
+  class?: string;
+  size?: string | number;
+  title?: string;
+}
+
+const iconSizes: Partial<Record<IconName, { width: number; height: number }>> = {
+  "discover-arrow": { width: 6, height: 20 },
+};
+
+const {
+  name,
+  class: className = "",
+  size,
+  title,
+  ...props
+} = Astro.props;
+
+const defaultSize = iconSizes[name];
+const width = size ?? defaultSize?.width;
+const height = size ?? defaultSize?.height;
+---
+
+<svg
+  class={className}
+  width={width}
+  height={height}
+  aria-hidden={title ? undefined : "true"}
+  role={title ? "img" : undefined}
+  {...props}
+>
+  {title && <title>{title}</title>}
+  <use href={`/icons/sprite.svg#${name}`}></use>
+</svg>

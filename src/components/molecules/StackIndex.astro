@@ -1,0 +1,74 @@
+---
+/**
+ * StackIndex: el stack como colofón. Cada grupo ocupa una fila a todo el ancho
+ * (etiqueta a la izquierda, herramientas fluyendo a la derecha) en lugar de
+ * tres columnas de listas.
+ */
+import SectionMarker from "@atoms/SectionMarker.astro";
+import stack from "@lib/constants/stack";
+
+const icons = import.meta.glob<string>("/src/assets/tech/*.svg", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
+interface Props {
+  index?: string;
+}
+
+const { index } = Astro.props;
+const iconFor = (slug: string) => icons[`/src/assets/tech/${slug}.svg`];
+const total = stack.reduce((count, group) => count + group.items.length, 0);
+---
+
+<section class="stack-index margin-page flex w-screen flex-col">
+  <div data-reveal>
+    <SectionMarker index={index} label="Stack" meta={`${total} herramientas`} />
+  </div>
+
+  <div class="mt-[5vh] w-full">
+    {
+      stack.map((group, groupIndex) => (
+        <div
+          data-reveal
+          class="border-text-disabled2 grid grid-cols-[13rem_minmax(0,1fr)] gap-x-10 gap-y-5 border-b py-9 transition-colors duration-600 max-md:grid-cols-1 max-md:gap-y-4 max-md:py-7"
+        >
+          <div class="flex items-baseline gap-4">
+            <span class="text-accent shrink-0 text-[10px] tabular-nums tracking-[0.18em]">
+              {`0${groupIndex + 1}`}
+            </span>
+            <h3 class="text-headline">{group.label}</h3>
+          </div>
+
+          <ul class="flex flex-wrap items-center gap-x-9 gap-y-5 max-md:gap-x-7">
+            {group.items.map((item) => (
+              <li class="tech-chip flex items-center gap-2.5">
+                <span
+                  class="tech-icon text-text block size-4 shrink-0 transition-colors duration-300"
+                  set:html={iconFor(item.slug)}
+                />
+                <span class="text-text-standard text-[clamp(1rem,1.5vw,1.25rem)] leading-none">
+                  {item.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .tech-icon :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .tech-chip:hover .tech-icon {
+    color: var(--color-accent);
+  }
+</style>

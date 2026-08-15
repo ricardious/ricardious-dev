@@ -1,5 +1,141 @@
 ---
+import FullImage from "@atoms/FullImage.astro";
+import Icon from "@atoms/Icon.astro";
+import ImageSlider from "@atoms/ImageSlider.astro";
+import SectionMarker from "@atoms/SectionMarker.astro";
+import TextSpawn from "@atoms/TextSpawn.astro";
 import Layout from "@layouts/Layout.astro";
+import education from "@lib/constants/education";
+import experience from "@lib/constants/experience";
+import projects from "@lib/constants/projects";
+import Certifications from "@molecules/Certifications.astro";
+import EntryList from "@molecules/EntryList.astro";
+import Manifesto from "@molecules/Manifesto.astro";
+import ProjectsPreview from "@molecules/ProjectsPreview.astro";
+import StackIndex from "@molecules/StackIndex.astro";
+import PageTemplate from "@templates/PageTemplate.astro";
+import fullImage from "@/assets/home/full-image.webp";
+
+const fullImageSrc = fullImage.src;
+const projectCount = projects.length;
 ---
 
-<Layout title="Ricardious" />
+<Layout
+  title="Ricardious | Diseñador & Desarrollador"
+  description="Portafolio de Alex Ricardo Castañeda Rodríguez — diseño y desarrollo de productos digitales desde Guatemala."
+>
+  <PageTemplate>
+    <!-- Hero -->
+    <section
+      class="hero relative flex h-screen w-screen items-center justify-center pb-[8vh] max-[900px]:margin-page max-[700px]:p-0"
+    >
+      <div class="relative flex flex-col flex-wrap">
+        <!-- First line -->
+        <div
+          class="line flex h-auto w-auto items-center gap-[2vw] whitespace-nowrap font-heading text-[clamp(2rem,9vw,16rem)] uppercase leading-[0.8] text-text-standard max-sm:flex-col max-sm:gap-4 max-sm:whitespace-normal max-sm:text-[9vw]"
+        >
+          <TextSpawn>Alex Ricardo</TextSpawn>
+          <div
+            class="flex w-[15vw] flex-col gap-2 text-start max-sm:mb-4 max-sm:w-[50vw]"
+          >
+            <ImageSlider />
+          </div>
+        </div>
+        <!-- Second line -->
+        <div
+          class="line flex h-auto w-auto items-center gap-[2vw] whitespace-nowrap pl-16 font-heading text-[clamp(2rem,9vw,16rem)] uppercase leading-[0.8] text-text-standard max-sm:flex-col max-sm:gap-4 max-sm:whitespace-normal max-sm:pl-0 max-sm:text-[9vw]"
+        >
+          <TextSpawn direction="LEFT">Castañeda Rodríguez</TextSpawn>
+        </div>
+      </div>
+
+      <!-- Riel editorial: identidad, indicador de scroll y edición -->
+      <div
+        class="hero-rail margin-page pointer-events-none absolute bottom-24 left-0 flex w-full animate-fadeIn items-end justify-between gap-6 opacity-0 [animation-delay:900ms] max-md:bottom-20"
+      >
+        <span
+          class="hero-rail-fade text-text/70 text-[10px] whitespace-nowrap uppercase leading-[1.6] tracking-[0.16em] max-sm:hidden"
+        >
+          Diseñador & desarrollador
+        </span>
+
+        <div
+          class="hero-rail-fade discover absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center"
+        >
+          <span class="font-body text-[10px] uppercase text-text">descubre</span
+          >
+          <Icon name="discover-arrow" class="mb-0.5 text-text" />
+        </div>
+
+        <span
+          class="hero-rail-fade text-text/70 text-right text-[10px] uppercase leading-[1.6] tracking-[0.16em] tabular-nums max-sm:hidden"
+        >
+          Portafolio 2026
+        </span>
+      </div>
+    </section>
+
+    <div class="demi-spacer"></div>
+
+    <!-- Manifiesto -->
+    <Manifesto index="01" />
+
+    <div class="spacer"></div>
+
+    <!-- Stack -->
+    <StackIndex index="02" />
+
+    <div class="spacer"></div>
+
+    <!-- Trayectoria: destino del enlace del manifiesto -->
+    <div id="trayectoria" class="scroll-mt-28">
+      <EntryList index="03" heading="Experiencia" entries={experience} />
+
+      <div class="demi-spacer"></div>
+
+      <EntryList index="04" heading="Educación" entries={education} />
+
+      <div class="demi-spacer"></div>
+
+      <Certifications index="05" />
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Trabajo seleccionado -->
+    <section class="margin-page flex w-screen flex-col items-center">
+      <div data-reveal class="w-full">
+        <SectionMarker
+          index="06"
+          label="Trabajo seleccionado"
+          meta={`${projectCount} proyectos`}
+        />
+      </div>
+      <div class="mt-[6vh] w-full">
+        <ProjectsPreview />
+      </div>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Full image -->
+    <FullImage src={fullImageSrc} alt="Escultura de vidrio líquido" brand />
+  </PageTemplate>
+</Layout>
+
+<style>
+  /* El riel editorial se desvanece con el scroll, sin listeners. */
+  @supports (animation-timeline: scroll()) {
+    .hero-rail-fade {
+      animation: hero-rail-fade linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 300px;
+    }
+  }
+
+  @keyframes hero-rail-fade {
+    to {
+      opacity: 0;
+    }
+  }
+</style>

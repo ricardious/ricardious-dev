@@ -1,8 +1,12 @@
 ---
-import "@styles/global.css";
 import { ClientRouter } from "astro:transitions";
+
+import "@styles/global.css";
+
 import MouseFollower from "@atoms/MouseFollower";
+import Header from "@organisms/Header.astro";
 import Loader from "@organisms/Loader.astro";
+import StyleSwitcher from "@organisms/StyleSwitcher.astro";
 
 interface Props {
   title: string;
@@ -13,12 +17,57 @@ const { title, description = "Ricardious Portfolio" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="system">
+<html lang="es" class="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <script is:inline>
+      (() => {
+        const STORAGE_KEY = "theme";
+        const root = document.documentElement;
+
+        const getTheme = () => {
+          const storedTheme = localStorage.getItem(STORAGE_KEY);
+          return storedTheme === "light" ||
+            storedTheme === "dark" ||
+            storedTheme === "system"
+            ? storedTheme
+            : "system";
+        };
+
+        const applyTheme = (theme, targetRoot = document.documentElement) => {
+          targetRoot.classList.remove("light", "dark", "system");
+          targetRoot.classList.add(theme);
+        };
+
+        const setTheme = (theme) => {
+          localStorage.setItem(STORAGE_KEY, theme);
+          applyTheme(theme);
+        };
+
+        const toggleTheme = () => {
+          const isDark =
+            root.classList.contains("dark") ||
+            (root.classList.contains("system") &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+          setTheme(isDark ? "light" : "dark");
+        };
+
+        applyTheme(getTheme(), root);
+        window.__theme = { getTheme, setTheme, toggleTheme };
+
+        document.addEventListener("astro:before-swap", (event) => {
+          applyTheme(getTheme(), event.newDocument.documentElement);
+        });
+
+        document.addEventListener("astro:after-swap", () => {
+          applyTheme(getTheme());
+        });
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
@@ -29,6 +78,8 @@ const { title, description = "Ricardious Portfolio" } = Astro.props;
   <body>
     <Loader />
     <MouseFollower client:only="react" />
+    <Header />
+    <StyleSwitcher />
     <slot />
   </body>
 </html>

@@ -1,0 +1,106 @@
+---
+/**
+ * ImageSlider: auto-cycling image slider.
+ * Transition is a colorless clip-path wipe between two stacked layers,
+ * so the incoming image reveals over the current one with no color / flash.
+ */
+import projects from "@lib/constants/projects";
+
+const images = projects.map((p) => p.coverImgSmall);
+---
+
+<div
+  class="img-slider relative w-full aspect-3/2 overflow-hidden cursor-pointer"
+  data-image-slider
+  data-images={JSON.stringify(images)}
+>
+  <img
+    class="slider-base absolute inset-0 h-full w-full object-cover"
+    src={images[0]}
+    alt="Project preview"
+    loading="eager"
+  />
+  <img
+    class="slider-top absolute inset-0 h-full w-full object-cover"
+    src={images[0]}
+    alt=""
+    aria-hidden="true"
+    style="clip-path: inset(0 100% 0 0);"
+  />
+</div>
+
+<script>
+  const WIPE_DURATION = 700;
+  const SLIDE_INTERVAL = 4000;
+
+  interface SliderTimers {
+    interval: number;
+    wipe?: number;
+  }
+
+  const sliderTimers = new Map<HTMLElement, SliderTimers>();
+
+  function getImages(container: HTMLElement): string[] {
+    try {
+      const images: unknown = JSON.parse(container.dataset.images ?? "[]");
+      return Array.isArray(images)
+        ? images.filter((image): image is string => typeof image === "string")
+        : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function startSlider(container: HTMLElement) {
+    const images = getImages(container);
+    const base = container.querySelector<HTMLImageElement>(".slider-base");
+    const top = container.querySelector<HTMLImageElement>(".slider-top");
+    if (images.length < 2 || !base || !top) return;
+
+    let index = 0;
+    const timer = window.setInterval(() => {
+      const next = (index + 1) % images.length;
+
+      // Prepare the incoming image, hidden on the left.
+      top.src = images[next];
+      top.style.transition = "none";
+      top.style.clipPath = "inset(0 100% 0 0)";
+      void top.offsetWidth; // Force reflow so the reset applies.
+
+      // Wipe it in (left -> right).
+      top.style.transition = `clip-path ${WIPE_DURATION}ms cubic-bezier(0.77, 0, 0.175, 1)`;
+      top.style.clipPath = "inset(0 0 0 0)";
+
+      // Commit to the base layer and reset the top for the next cycle.
+      const timers = sliderTimers.get(container);
+      const wipe = window.setTimeout(() => {
+        base.src = images[next];
+        top.style.transition = "none";
+        top.style.clipPath = "inset(0 100% 0 0)";
+        index = next;
+      }, WIPE_DURATION);
+      if (timers) timers.wipe = wipe;
+    }, SLIDE_INTERVAL);
+
+    sliderTimers.set(container, { interval: timer });
+  }
+
+  function stopSliders() {
+    for (const timers of sliderTimers.values()) {
+      window.clearInterval(timers.interval);
+      if (timers.wipe) window.clearTimeout(timers.wipe);
+    }
+    sliderTimers.clear();
+  }
+
+  function initSliders() {
+    stopSliders();
+    document
+      .querySelectorAll<HTMLElement>("[data-image-slider]")
+      .forEach(startSlider);
+  }
+
+  initSliders();
+  document.addEventListener("astro:before-swap", stopSliders);
+  document.addEventListener("astro:after-swap", initSliders);
+</script>

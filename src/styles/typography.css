@@ -26,6 +26,7 @@
 	/* H2 */
 	.text-h2 {
 		font-family: var(--font-body);
+		font-weight: normal;
 		font-size: 5vw;
 		line-height: 1;
 		color: var(--color-text-standard);
@@ -43,13 +44,14 @@
 
 		&.serif {
 			font-family: var(--font-heading);
-			font-weight: 100;
+			font-weight: normal;
 		}
 	}
 
 	/* H2.5 */
 	.text-h2-5 {
 		font-family: var(--font-body);
+		font-weight: normal;
 		font-size: 32px;
 		line-height: 1.3;
 		color: var(--color-text-standard);
@@ -73,18 +75,20 @@
 	/* H3 */
 	.text-h3 {
 		font-family: var(--font-body);
+		font-weight: normal;
 		font-size: 30px;
 		color: var(--color-text-standard);
 
 		&.serif {
 			font-family: var(--font-heading);
-			font-weight: 100;
+			font-weight: normal;
 		}
 	}
 
 	/* H4 */
 	.text-h4 {
 		font-family: var(--font-body);
+		font-weight: normal;
 		color: var(--color-text-standard);
 		font-size: 20px;
 		line-height: 1.2;
@@ -97,6 +101,7 @@
 	/* H5 */
 	.text-h5 {
 		font-family: var(--font-body);
+		font-weight: normal;
 		font-size: 12px;
 		text-transform: uppercase;
 		line-height: 1.2;
@@ -106,6 +111,7 @@
 	/* H6 */
 	.text-h6 {
 		font-family: var(--font-body);
+		font-weight: normal;
 		color: var(--color-text);
 		font-size: 12px;
 		line-height: 1.4;
@@ -118,6 +124,7 @@
 		font-size: 14px;
 		opacity: 0.8;
 		font-family: var(--font-body);
+		font-weight: normal;
 	}
 
 	/* Small */
@@ -153,14 +160,17 @@
 	/* Headline */
 	.text-headline {
 		text-transform: uppercase;
-		font-size: 10px;
+		font-size: 14px;
+		letter-spacing: 0.12em;
 		font-family: var(--font-body);
+		font-weight: normal;
 		color: var(--color-text);
 	}
 
 	/* Description */
 	.text-description {
 		font-family: var(--font-body);
+		font-weight: normal;
 		color: var(--color-text);
 		margin: 20px 0px;
 		font-size: 12px;
@@ -178,14 +188,14 @@
 
 	/* Centered */
 	.text-centered {
-		font-family: var(--font-display);
-		font-size: 14px;
+		font-family: var(--font-body);
+		font-size: 20px;
 		text-align: center;
-		line-height: 140%;
+		line-height: 150%;
 		font-weight: 400;
 		align-self: center;
-		width: 60%;
-		color: var(--color-text);
+		width: 62%;
+		color: var(--color-text-standard);
 
 		span {
 			color: var(--color-primary);
@@ -198,7 +208,7 @@
 
 		@media (max-width: 700px) {
 			width: 100%;
-			font-size: 12px;
+			font-size: 16px;
 		}
 	}
 
@@ -209,6 +219,7 @@
 		font-size: 10px;
 		color: var(--color-text);
 		font-family: var(--font-body);
+		font-weight: normal;
 		transition: color 0.5s;
 
 		&:hover {
@@ -240,6 +251,7 @@
 		pointer-events: auto;
 		border: solid 1px #96969640;
 		font-family: var(--font-body);
+		font-weight: normal;
 		text-transform: uppercase;
 		transition: background-color 0.3s;
 		backdrop-filter: blur(6px);
@@ -266,6 +278,57 @@
 		}
 	}
 
+	/* Link con flecha: reemplaza al .button en contextos editoriales */
+	.link-arrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding-bottom: 8px;
+		font-family: var(--font-body);
+		font-size: 11px;
+		font-weight: normal;
+		text-transform: uppercase;
+		letter-spacing: 0.14em;
+		color: var(--color-text-standard);
+		border-bottom: 1px solid var(--color-text-disabled2);
+		transition:
+			border-color 0.4s,
+			color 0.4s;
+
+		&::after {
+			content: "↗";
+			font-size: 12px;
+			line-height: 1;
+			transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		&:hover {
+			border-color: var(--color-text-standard);
+
+			&::after {
+				transform: translate(3px, -3px);
+			}
+		}
+	}
+
+	/* Reveal en scroll — CSS puro, sin JS ni IntersectionObserver.
+	   El estado oculto vive dentro de @supports: si el navegador no soporta
+	   scroll-driven animations, el contenido se muestra tal cual. */
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			[data-reveal] {
+				animation: reveal-rise linear both;
+				animation-timeline: view();
+				animation-range: entry 10% entry 60%;
+			}
+
+			/* Segundo tiempo, para columnas que comparten borde superior. */
+			[data-reveal="late"] {
+				animation-range: entry 25% entry 80%;
+			}
+		}
+	}
+
 	/* Separator */
 	.separator {
 		margin: 4vh 0;
@@ -286,5 +349,16 @@
 			height: 100vh;
 			width: 100vw;
 		}
+	}
+}
+
+@keyframes reveal-rise {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 34px, 0);
+	}
+	to {
+		opacity: 1;
+		transform: none;
 	}
 }

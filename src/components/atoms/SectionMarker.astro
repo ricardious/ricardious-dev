@@ -1,0 +1,41 @@
+---
+/**
+ * SectionMarker: encabezado de sección editorial — número de índice, etiqueta,
+ * metadato opcional a la derecha y una línea de aire completa.
+ * Contraparte alineada a la izquierda del <Headline /> centrado.
+ */
+interface Props {
+  index?: string;
+  label: string;
+  meta?: string;
+  class?: string;
+}
+
+const { index, label, meta, class: className } = Astro.props;
+---
+
+<div class:list={["w-full", className]}>
+  <div class="flex items-baseline justify-between gap-6">
+    <div class="flex items-baseline gap-4">
+      {
+        index && (
+          <span class="text-accent font-body text-[11px] tabular-nums tracking-[0.18em]">
+            ({index})
+          </span>
+        )
+      }
+      <span class="text-headline">{label}</span>
+    </div>
+    {
+      meta && (
+        <span class="text-text/60 font-body text-[10px] uppercase tracking-[0.18em] max-sm:hidden">
+          {meta}
+        </span>
+      )
+    }
+  </div>
+  <div
+    class="mt-3 h-px w-full bg-text-disabled2 transition-colors duration-600"
+  >
+  </div>
+</div>

@@ -1,0 +1,41 @@
+---
+import Icon from "@atoms/Icon.astro";
+import LogoMark from "@atoms/LogoMark.astro";
+import NavLink from "@atoms/NavLink.astro";
+
+interface Props {
+  name?: string;
+  location?: string;
+  email?: string;
+}
+
+const {
+  name = "ricardious",
+  location = "Guatemala, GT",
+  email = "castaneda.systems@gmail.com",
+} = Astro.props;
+---
+
+<header
+  class="padding-global fixed z-100 flex w-screen items-start justify-between mix-blend-difference"
+>
+  <a href="/" class="flex items-center gap-3 text-h6 text-white">
+    <LogoMark class="size-8" />
+    <div>
+      <span class="name">{name}</span>
+      <br />
+      <span class="text-description text-white/70">{location}</span>
+    </div>
+  </a>
+
+  <nav class="flex items-center gap-6 max-md:gap-5">
+    <NavLink href="/">[ SOBRE MÍ ]</NavLink>
+    <a
+      href={`mailto:${email}`}
+      class="text-white/40 transition-colors hover:text-white"
+      aria-label="Enviar correo"
+    >
+      <Icon name="envelope-closed" class="block size-4" />
+    </a>
+  </nav>
+</header>

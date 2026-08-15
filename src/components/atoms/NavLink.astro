@@ -1,0 +1,28 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+  isActive?: boolean;
+  autoActive?: boolean;
+}
+
+const {
+  href,
+  class: className,
+  isActive = false,
+  autoActive = true,
+} = Astro.props;
+const currentPath = Astro.url.pathname;
+const active = isActive || (autoActive && currentPath === href);
+---
+
+<a
+  href={href}
+  class:list={[
+    "text-h6 transition-colors",
+    active ? "text-white line-through" : "text-white/60 hover:text-white",
+    className,
+  ]}
+>
+  <slot />
+</a>

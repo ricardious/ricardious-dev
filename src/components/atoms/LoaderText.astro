@@ -2,12 +2,16 @@
 interface Props {
   text: string;
   class?: string;
-  id?: string;
 }
 
-const { text, class: className = "", id } = Astro.props;
+const { text, class: className = "" } = Astro.props;
 ---
 
-<div class:list={["text-h2-load", className]} id={id}>
+<div
+  class:list={[
+    "text-text-standard font-body text-[clamp(1.75rem,5vw,3.75rem)] leading-none",
+    className,
+  ]}
+>
   {text}
 </div>

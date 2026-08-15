@@ -1,0 +1,156 @@
+---
+/**
+ * ProjectsPreview: lista los primeros proyectos con imagen que sigue al cursor.
+ * Cada fila lleva índice, nombre en display serif y metadatos (año · rol).
+ * Cierra siempre con una fila de archivo hacia /works.
+ */
+import projects from "@lib/constants/projects";
+
+const previewProjects = projects.slice(0, 4);
+const pad = (value: number) => (value < 10 ? `0${value}` : `${value}`);
+
+/** "Product Design, Frontend Development" -> una línea limpia por disciplina. */
+const roleLines = (role: string) =>
+  role
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean);
+---
+
+<div class="projects-preview w-full">
+  {
+    previewProjects.map((project, index) => (
+      <div
+        class="project-item group w-full"
+        data-cover={project.coverImg}
+        data-reveal
+      >
+        <a
+          href={`/works/${project.path}`}
+          class="project-link flex items-start gap-6 py-2 transition-transform duration-500 ease-out group-hover:translate-x-4 max-md:gap-4"
+        >
+          <span class="text-text mt-[1.1em] shrink-0 text-[11px] tabular-nums tracking-[0.18em] transition-colors duration-300 group-hover:text-accent max-md:mt-[0.9em]">
+            ({pad(index + 1)})
+          </span>
+
+          <span class="text-h1 flex-1 font-heading uppercase leading-[0.9]">
+            {project.name}
+          </span>
+
+          <span class="mt-[1.1em] hidden shrink-0 flex-col items-end gap-1.5 text-right lg:flex">
+            <span class="text-text-standard text-[11px] uppercase tracking-[0.16em] tabular-nums">
+              {project.date}
+            </span>
+            {roleLines(project.role).map((line) => (
+              <span class="text-text/60 block text-[10px] whitespace-nowrap uppercase leading-[1.4] tracking-[0.14em]">
+                {line}
+              </span>
+            ))}
+          </span>
+        </a>
+        <div class="separator" />
+      </div>
+    ))
+  }
+
+  <div class="project-item group w-full" data-reveal>
+    <a
+      href="/works"
+      class="flex items-start gap-6 py-2 transition-transform duration-500 ease-out group-hover:translate-x-4 max-md:gap-4"
+    >
+      <span
+        class="text-text mt-[1.1em] shrink-0 text-[11px] tabular-nums tracking-[0.18em] transition-colors duration-300 group-hover:text-accent max-md:mt-[0.9em]"
+      >
+        (XX)
+      </span>
+
+      <span class="text-h1 flex-1 font-heading uppercase leading-[0.9]">
+        Archivo
+      </span>
+
+      <span
+        class="text-text/60 mt-[1.1em] hidden shrink-0 text-[10px] uppercase tracking-[0.14em] tabular-nums lg:block"
+      >
+        {pad(projects.length)} proyectos
+      </span>
+    </a>
+    <div class="separator"></div>
+  </div>
+
+  <!-- Hover image follower (desktop only) -->
+  <div
+    class="hover-image-wrapper pointer-events-none fixed top-0 left-0 z-10 will-change-transform max-md:hidden"
+  >
+    <div class="hover-image">
+      <img
+        class="block h-auto w-[26vw] max-w-[440px] object-cover"
+        src=""
+        alt=""
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Mostrar/ocultar es puro CSS: el JS sólo aporta lo que CSS no sabe,
+     la posición del cursor y qué imagen toca. */
+  .hover-image {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+    transition:
+      opacity 450ms ease-out,
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .projects-preview:has(.project-item[data-cover]:hover) .hover-image {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hover-image {
+      transition-duration: 1ms;
+    }
+  }
+</style>
+
+<script>
+  type PreviewRoot = HTMLElement & { __cleanup?: () => void };
+
+  function initProjectsPreview() {
+    const root = document.querySelector<PreviewRoot>(".projects-preview");
+    const wrapper = root?.querySelector<HTMLElement>(".hover-image-wrapper");
+    const img = root?.querySelector<HTMLImageElement>(".hover-image img");
+    if (!root || !wrapper || !img) return;
+
+    root.__cleanup?.();
+
+    const follow = (event: MouseEvent) => {
+      wrapper.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+    };
+
+    const setCover = (event: MouseEvent) => {
+      const cover = (event.currentTarget as HTMLElement).dataset.cover;
+      if (cover) img.src = cover;
+      // Coloca la imagen ya en el cursor: al entrar por scroll con el puntero
+      // quieto no llega ningún mousemove y se quedaría en la esquina 0,0.
+      follow(event);
+    };
+
+    const items = root.querySelectorAll<HTMLElement>(
+      ".project-item[data-cover]",
+    );
+
+    window.addEventListener("mousemove", follow, { passive: true });
+    items.forEach((item) => item.addEventListener("mouseenter", setCover));
+
+    root.__cleanup = () => {
+      window.removeEventListener("mousemove", follow);
+      items.forEach((item) => item.removeEventListener("mouseenter", setCover));
+    };
+  }
+
+  initProjectsPreview();
+  document.addEventListener("astro:after-swap", initProjectsPreview);
+</script>

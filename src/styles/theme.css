@@ -16,9 +16,11 @@
 	--color-opacity: oklch(0 0 0 / 0.56);
 	--color-placeholder: oklch(0.213 0 0);
 	--color-primary: oklch(0.745 0.037 266.776);
-	--color-text-base: oklch(0.333 0 0);
-	--color-text-secondary-base: oklch(0.543 0 0);
-	--color-text-disabled-base: oklch(0.643 0 0);
+	/* Acento legible: --color-primary es demasiado claro sobre fondo claro. */
+	--color-accent-base: oklch(0.52 0.088 273);
+	--color-text-base: oklch(0.27 0 0);
+	--color-text-secondary-base: oklch(0.4 0 0);
+	--color-text-disabled-base: oklch(0.52 0 0);
 	--color-text-disabled2-base: oklch(0.863 0 0);
 	--color-text-disabled3-base: oklch(0.255 0 0);
 	--spacing-page: 10vw;
@@ -26,6 +28,16 @@
 	--spacing-global: 1.5vw;
 	--radius: 0.5rem;
 	--radius-button: 30px;
+
+	--animate-fadeIn: fadeIn 0.5s ease-in forwards;
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
 }
 
 @theme inline {
@@ -36,6 +48,7 @@
 	--color-text-disabled: var(--color-text-disabled-base);
 	--color-text-disabled2: var(--color-text-disabled2-base);
 	--color-text-disabled3: var(--color-text-disabled3-base);
+	--color-accent: var(--color-accent-base);
 }
 
 @layer theme {
@@ -44,11 +57,39 @@
 		@variant dark {
 			--color-background-base: oklch(0.078 0 0);
 			--color-panel-base: oklch(1 0 0 / 0.075);
-			--color-text-base: oklch(0.973 0 0);
-			--color-text-secondary-base: oklch(1 0 0 / 0.5);
-			--color-text-disabled-base: oklch(0.294 0 0);
+			--color-text-base: oklch(0.985 0 0);
+			--color-text-secondary-base: oklch(1 0 0 / 0.75);
+			--color-text-disabled-base: oklch(0.5 0 0);
 			--color-text-disabled2-base: oklch(0.176 0 0);
 			--color-text-disabled3-base: oklch(0.255 0 0);
+			--color-accent-base: oklch(0.79 0.065 273);
 		}
+	}
+}
+
+/* Theme switch view transition */
+.theme-transitioning::view-transition-new(root) {
+	mask:
+		url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="white"/></svg>')
+		center / 0 no-repeat;
+	animation: scale 1s;
+	animation-fill-mode: both;
+}
+
+.theme-transitioning::view-transition-old(root),
+.dark.theme-transitioning::view-transition-old(root) {
+	animation: none;
+	animation-fill-mode: both;
+	z-index: -1;
+}
+
+.dark.theme-transitioning::view-transition-new(root) {
+	animation: scale 1s;
+	animation-fill-mode: both;
+}
+
+@keyframes scale {
+	to {
+		mask-size: 200vmax;
 	}
 }
