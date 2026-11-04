@@ -1,4 +1,41 @@
 import { v4 as uuidv4 } from 'uuid';
+import algemifyAlgorithmEditor from '@/assets/projects/algemify/algorithm-editor.webp';
+import algemifyArena from '@/assets/projects/algemify/arena.webp';
+import algemifyArenaInternal from '@/assets/projects/algemify/arena-internal.webp';
+import algemifyCompanions from '@/assets/projects/algemify/companions.webp';
+import algemifyCourse from '@/assets/projects/algemify/course.webp';
+import algemifyCover from '@/assets/projects/algemify/cover.webp';
+import algemifyCreateAccount from '@/assets/projects/algemify/create-account.webp';
+import algemifyDashboard from '@/assets/projects/algemify/dashboard.webp';
+import algemifyDashboardLearning from '@/assets/projects/algemify/dashboard-learning.webp';
+import algemifyDashboardMonitor from '@/assets/projects/algemify/dashboard-monitor-mockup.webp';
+import algemifyDashboardSkills from '@/assets/projects/algemify/dashboard-skills.webp';
+import algemifyForum from '@/assets/projects/algemify/forum.webp';
+import algemifyFriends from '@/assets/projects/algemify/friends.webp';
+import algemifyGitEditor from '@/assets/projects/algemify/git-editor.webp';
+import algemifyGit from '@/assets/projects/algemify/git-playground.webp';
+import algemifyLandingMonitor from '@/assets/projects/algemify/landing-monitor-mockup.webp';
+import algemifyLaptop from '@/assets/projects/algemify/laptop-mockup.webp';
+import algemifyLaptopSmall from '@/assets/projects/algemify/laptop-mockup-small.webp';
+import algemifyLeaderboard from '@/assets/projects/algemify/leaderboard.webp';
+import algemifyLearn from '@/assets/projects/algemify/learn.webp';
+import algemifyPaths from '@/assets/projects/algemify/learning-paths.webp';
+import algemifyLesson from '@/assets/projects/algemify/lesson.webp';
+import algemifyMessages from '@/assets/projects/algemify/messages.webp';
+import algemifyMissions from '@/assets/projects/algemify/missions.webp';
+import algemifyOnboardingCompanion from '@/assets/projects/algemify/onboarding-companion.webp';
+import algemifyOnboardingFocus from '@/assets/projects/algemify/onboarding-focus.webp';
+import algemifyOnboardingHandle from '@/assets/projects/algemify/onboarding-handle.webp';
+import algemifyOnboardingOrigin from '@/assets/projects/algemify/onboarding-origin.webp';
+import algemifyPractice from '@/assets/projects/algemify/practice.webp';
+import algemifyProfile from '@/assets/projects/algemify/profile.webp';
+import algemifyProgramLab from '@/assets/projects/algemify/program-lab.webp';
+import algemifyRewards from '@/assets/projects/algemify/rewards.webp';
+import algemifySeason from '@/assets/projects/algemify/season.webp';
+import algemifySignIn from '@/assets/projects/algemify/sign-in.webp';
+import algemifySqlEditor from '@/assets/projects/algemify/sql-editor.webp';
+import algemifySql from '@/assets/projects/algemify/sql-playground.webp';
+import algemifyTournaments from '@/assets/projects/algemify/tournaments.webp';
 import liquidCover from '@/assets/projects/liquid-glass-sandbox/cover.webp';
 import liquidCoverSmall from '@/assets/projects/liquid-glass-sandbox/cover-small.webp';
 import liquidFullPage from '@/assets/projects/liquid-glass-sandbox/full-page.webp';
@@ -57,6 +94,223 @@ export interface Project {
 }
 
 const projectsData: Omit<Project, 'id' | 'index'>[] = [
+	{
+		name: 'Algemify',
+		path: 'algemify',
+		title: 'Algemify',
+		coverImg: algemifyLaptop.src,
+		coverImgSmall: algemifyLaptopSmall.src,
+		visual1: algemifyLandingMonitor.src,
+		date: '2026',
+		role: 'Product Design, Frontend Development',
+		techs: ['Next.js', 'React', 'Tailwind CSS', 'SQL'],
+		websiteLink: 'https://algemify.ricardious.dev/',
+		description:
+			'Plataforma de aprendizaje y práctica de programación con retos de algoritmos, SQL y Git, rutas guiadas y duelos competitivos dentro de una interfaz inspirada en un sistema operativo.',
+		overview:
+			'Algemify reúne aprendizaje, práctica y competencia en una experiencia para desarrolladores. El recorrido empieza con la configuración del perfil y la elección de un compañero animado, y continúa en un dashboard con estación orbital, objetivos diarios y mapa de habilidades. Los cursos combinan lecciones, diagramas ejecutables y evaluaciones, mientras la práctica y la arena conectan problemas de programación, retos y duelos.',
+		highlights: [
+			'Problemas de algoritmos, SQL y Git con evaluación en el servidor contra pruebas ocultas.',
+			'Demos públicas con consultas SQL ejecutables y una terminal Git interactiva en el navegador.',
+			'Salas privadas para competir con amigos y duelos clasificados por rating.',
+			'Rutas de aprendizaje con lecciones, diagramas interactivos y evaluaciones por unidad.',
+			'Onboarding, compañeros animados, logros y recompensas conectados con la progresión del estudiante.',
+		],
+		sections: [
+			{
+				eyebrow: 'Concepto',
+				title: 'Aprender, practicar y competir en un mismo lugar',
+				body: [
+					'El producto conecta lecciones breves con problemas prácticos y desafíos competitivos. Las rutas se desbloquean en orden para dar continuidad al aprendizaje, mientras la práctica permite explorar distintos temas al propio ritmo.',
+					'Los retos diarios, las misiones y las temporadas añaden objetivos recurrentes alrededor de la resolución de problemas.',
+				],
+			},
+			{
+				eyebrow: 'Experiencia',
+				title: 'Probar las herramientas desde la portada',
+				body: [
+					'La landing permite ejecutar consultas sobre una base de datos de ejemplo y explorar comandos Git sin crear una cuenta. El editor, los esquemas de tablas y los resultados muestran la interacción con las herramientas antes de entrar a la plataforma.',
+					'La arena presenta dos formas de competir: salas privadas con amigos y emparejamiento por rating para duelos individuales.',
+				],
+			},
+			{
+				eyebrow: 'Identidad',
+				title: 'Un universo de código y constelaciones',
+				body: [
+					'La dirección visual toma referencias de terminales y paneles de control: tipografía monoespaciada, bordes finos, módulos numerados y acentos violeta, cian y rojo sobre fondo oscuro.',
+					'Los planetas ASCII animados, el mapa de aprendizaje y las órbitas de clasificación convierten la progresión en una parte reconocible de la identidad del producto.',
+				],
+			},
+		],
+		toolGroups: [
+			{
+				label: 'Frontend',
+				items: ['Next.js', 'React', 'Tailwind CSS', 'Gráficos ASCII animados'],
+			},
+			{
+				label: 'Práctica',
+				items: [
+					'Algoritmos en JavaScript, TypeScript, Python, Java y Rust',
+					'Editor y consultas SQL',
+					'Terminal Git interactiva',
+					'Evaluación con pruebas ocultas',
+				],
+			},
+			{
+				label: 'Producto',
+				items: [
+					'Rutas y lecciones',
+					'Retos diarios y misiones',
+					'Salas privadas',
+					'Duelos por rating',
+					'Temporadas y clasificación',
+				],
+			},
+		],
+		gallery: [
+			{
+				src: algemifyLandingMonitor.src,
+				alt: 'Mockup de la portada de Algemify en un monitor de escritorio',
+			},
+			{
+				src: algemifyDashboardMonitor.src,
+				alt: 'Mockup del dashboard de Algemify en un monitor de escritorio',
+			},
+			{
+				src: algemifyCover.src,
+				alt: 'Captura de la portada de Algemify con planeta ASCII',
+				wide: true,
+			},
+			{
+				src: algemifySignIn.src,
+				alt: 'Acceso a Algemify antes de iniciar sesión',
+			},
+			{
+				src: algemifyCreateAccount.src,
+				alt: 'Registro de una cuenta nueva en Algemify',
+			},
+			{
+				src: algemifyOnboardingHandle.src,
+				alt: 'Onboarding de Algemify: elección del nombre de usuario',
+			},
+			{
+				src: algemifyOnboardingOrigin.src,
+				alt: 'Onboarding de Algemify: año de nacimiento y país sin completar',
+			},
+			{
+				src: algemifyOnboardingFocus.src,
+				alt: 'Onboarding de Algemify: experiencia, objetivos e intereses',
+			},
+			{
+				src: algemifyOnboardingCompanion.src,
+				alt: 'Onboarding de Algemify: selección de un compañero animado',
+			},
+			{
+				src: algemifyDashboard.src,
+				alt: 'Dashboard de Algemify con compañero, estación orbital y estadísticas',
+			},
+			{
+				src: algemifyDashboardLearning.src,
+				alt: 'Dashboard de Algemify con aprendizaje, arena y objetivos diarios',
+			},
+			{
+				src: algemifyDashboardSkills.src,
+				alt: 'Dashboard de Algemify con mapa de habilidades y temporada',
+			},
+			{
+				src: algemifyPractice.src,
+				alt: 'Banco de problemas de Algemify y reto diario',
+			},
+			{
+				src: algemifyAlgorithmEditor.src,
+				alt: 'Editor de algoritmos de Algemify con el problema Bracket balance',
+			},
+			{
+				src: algemifySqlEditor.src,
+				alt: 'Editor de retos SQL de Algemify con esquema de tablas y consulta inicial',
+			},
+			{
+				src: algemifyGitEditor.src,
+				alt: 'Terminal de retos Git de Algemify con el objetivo y estado del repositorio',
+			},
+			{
+				src: algemifyLearn.src,
+				alt: 'Catálogo de cursos y rutas de aprendizaje de Algemify',
+			},
+			{
+				src: algemifyCourse.src,
+				alt: 'Curso de introducción a la programación con progreso y temario',
+			},
+			{
+				src: algemifyLesson.src,
+				alt: 'Lección de introducción a la programación dentro de Algemify',
+			},
+			{
+				src: algemifyProgramLab.src,
+				alt: 'Laboratorio interactivo de programación con diagrama de flujo, variables y salida',
+			},
+			{
+				src: algemifyArenaInternal.src,
+				alt: 'Arena de Algemify con duelos clasificados y configuración de salas privadas',
+			},
+			{
+				src: algemifyMissions.src,
+				alt: 'Retos diarios y misiones semanales de Algemify',
+			},
+			{
+				src: algemifyLeaderboard.src,
+				alt: 'Clasificación de Algemify y niveles por rating',
+			},
+			{
+				src: algemifySeason.src,
+				alt: 'Temporada First Light de Algemify y tabla de puntos',
+			},
+			{
+				src: algemifyCompanions.src,
+				alt: 'Hangar de compañeros animados de Algemify',
+			},
+			{
+				src: algemifyRewards.src,
+				alt: 'Recompensas de Algemify con BITS, personalización y logros',
+			},
+			{
+				src: algemifyProfile.src,
+				alt: 'Perfil de Algemify con estadísticas, actividad y logros',
+			},
+			{
+				src: algemifyTournaments.src,
+				alt: 'Vista de torneos de Algemify sin competiciones registradas',
+			},
+			{
+				src: algemifyForum.src,
+				alt: 'Foro de Algemify con categorías para la comunidad',
+			},
+			{
+				src: algemifyFriends.src,
+				alt: 'Vista de amigos y solicitudes de Algemify',
+			},
+			{
+				src: algemifyMessages.src,
+				alt: 'Bandeja de mensajes de Algemify sin conversaciones',
+			},
+			{
+				src: algemifySql.src,
+				alt: 'Demo pública de SQL en Algemify con editor, esquema de tablas y resultados de una consulta',
+			},
+			{
+				src: algemifyGit.src,
+				alt: 'Demo pública de Git en Algemify con terminal interactiva e historial de commits',
+			},
+			{
+				src: algemifyArena.src,
+				alt: 'Presentación de las salas privadas y los duelos por rating de Algemify',
+			},
+			{
+				src: algemifyPaths.src,
+				alt: 'Mapa de constelaciones con las rutas de aprendizaje de Algemify',
+			},
+		],
+	},
 	{
 		name: 'Semestrix',
 		path: 'semestrix',
